@@ -30,7 +30,7 @@
             font-size: 0.8em;
             font-family: georgia;
         }
-        
+
         .expand-component {
             width: 80%;
             height: 80px;
@@ -51,7 +51,7 @@
             margin: 20px;
             padding: 10px;
         }
-        
+
         .controls label {
             font-size: 0.8em;
         }
@@ -64,7 +64,6 @@
 
     <script>
         window.addEventListener('load', function() {
-            var el = document.getElementById('container');
             btnControls(); // Configure and display button tweakable controls
             fadeControls(); // Configure and display fade in tweakable controls
             expandControls(); // Configure and display expand tweakable controls
@@ -88,9 +87,9 @@
                     btn.getAnimations().map((anim) => anim.finish());
                 }
                 // Play the animation with the newly specified duration
-                btn.animate(
-                    {backgroundColor: [fromColor, toColor, fromColor]} 
-                    , duration);
+                btn.animate({
+                    backgroundColor: [fromColor, toColor, fromColor]
+                }, duration);
             };
 
             // Configure duration slider
