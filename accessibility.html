@@ -1,0 +1,73 @@
+<!doctype html>
+<head>
+    <title>Web Animation examples - Accessibility</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css" type="text/css">
+
+    <style>
+    .contact-selector li {
+        list-style-type: none;
+        display: inline-block;
+    }
+    .contact-selector ul {
+        padding-left: 0;
+        font-size: 0;
+    }
+    .avatar {
+        background: #ccc;
+        font-size: 1.2rem;
+        display: inline-block;
+        border-radius: 100%;
+        border: 0;
+        width: 50px;
+        height: 50px;
+        margin: 0 0.5em;
+        padding: 0;
+    }
+
+    .avatar.selected {
+        background: #31ffd5;
+        color: #000;
+    }
+
+    .avatar:hover {
+        background: #000;
+        color: #fff;
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+    <nav class="contact-selector"><ul>
+        <li><button class="avatar selected">JS</button></li>
+        <li><button class="avatar">DT</button></li>
+        <li><button class="avatar">TL</button></li>
+    </ul></nav>
+    <aside>
+        <h1>Accessibility options</h1>
+        <form>
+        <p><label><input type="checkbox" checked>Flash animations</label></p>
+    </aside>
+
+<script>
+window.onload = function () {
+    let flashKeyframes = [
+        { background: '#000' },
+        { background: '#31ffd5'},
+        { background: '#000'},
+        { background: '#31ffd5'},
+        { background: '#000'}
+    ];
+
+    Array.from(document.querySelectorAll('.avatar')).forEach(function (avatar) {
+        let flash = avatar.animate(flashKeyframes, 500);
+        flash.finish();
+        avatar.addEventListener('click', function (e) {
+            e.preventDefault();
+            flash.play();
+            // TODO: code button action here
+        });
+    });
+}
+</script>
+</body>
