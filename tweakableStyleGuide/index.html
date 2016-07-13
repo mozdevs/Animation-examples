@@ -4,6 +4,9 @@
     <title>Web Animations examples</title>
     <meta charset="utf-8">
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             margin: 0;
             padding: 0;
@@ -14,20 +17,41 @@
             
         }
 
-        button {
+        .btn {
             border: 1px solid black;
+            padding: 5px;
+        }
+
+        .btnComponent {
             margin-bottom: 20px;
         }
 
-        article {
+        .fadeInComponent {
+            width: 80%;
+            border: 1px solid black;
+            margin: auto;
+            padding: 5px;
+            text-align: left;
+            font-size: 0.8em;
+            font-family: georgia;
+        }
+
+        .controls {
             text-align: center;
             width: 20vw;
             border: 2px solid #4165AD;
             box-shadow: 3px 3px 3px 2px #ccc;
+            margin: 20px;
+            padding: 10px;
+            float: left;
         }
-
-        article label {
+    
+        .controls label {
             font-size: 0.8em;
+        }
+        .controls li {
+            font-size: 0.8em;
+            text-align: left;
         }
     </style>
 
@@ -61,27 +85,26 @@
             updateLabel(rangeSlider.value);
 
           
-            container.appendChild(label);
-            container.appendChild(document.createElement('br'));
             container.appendChild(rangeSlider);
+            container.appendChild(document.createElement('br'));
+            container.appendChild(label);
 
             return container;
         }
 
         window.addEventListener('load', function() {
             var el = document.getElementById('container');
-
-
             initBtnControls(); // Configure and display button tweakable controls
+            initFadeInControls(); // Configure and display fade in tweakable controls
         });
 
         function initBtnControls() {
-            var btnControls = document.getElementById('btnControls');
+            var btnControls = document.querySelector('.btnControls');
             
-            var btn = document.getElementById('btnComponent');
+            var btn = document.querySelector('.btnComponent');
 
             // btn animation config vars
-            var duration = 2500;
+            var duration = 1000;
             var fromColor = '#FAFAFA',
                 toColor = '#4165AD';
 
@@ -115,35 +138,83 @@
 
             btnControls.appendChild(durationSlider);
 
-            var btnFromColor = document.getElementById('btnFromColor'),
-                btnToColor = document.getElementById('btnToColor');
-            
-            btnFromColor.value = fromColor;
+            // Configure colour picker for toColor            
+            var btnToColor = document.getElementById('btnToColor');
             btnToColor.value = toColor;
 
-            btnFromColor.addEventListener('change', () => {
-                fromColor = btnFromColor.value;
-                btn.style.backgroundColor = fromColor;
-                playAnimation();
-            });
-
+            // Changing the colour causes animation to be replayed
             btnToColor.addEventListener('change', () => {
                 toColor = btnToColor.value;
                 playAnimation();
             });
+
+            // Clicking anywhere in the box causes animation to be replayed
+            btnControls.addEventListener('click', () => {
+                playAnimation();
+            });
+        }
+
+        function initFadeInControls() {
+            var fadeInControls = document.querySelector('.fadeInControls');
+
+            var fadeInComponent = document.querySelector('.fadeInComponent');
+            var duration = 25000;
+            var playAnimation = () => {
+                // Stop all current animations
+                if (fadeInComponent.getAnimations) {
+                    fadeInComponent.getAnimations().map((anim) => anim.finish());
+                }
+
+                // Play the animation with the newly specified duration
+                fadeInComponent.animate([
+                    {opacity: 0},
+                    {opacity: 1}
+                ], duration);
+            };
+
+            var durationSlider = new SliderControl({
+                min: 0.05,
+                max: 5,
+                step: 0.05,
+                initial: 2.5,
+                labelText: (val) => 'Duration: ' + val + 's'
+            }, (newDuration) => {
+                duration = newDuration * 1000;
+                playAnimation();
+            });
+
+
+            fadeInControls.appendChild(durationSlider);
+
         }
     </script>
 </head>
 <body>
     <div id="container">
 
-        <article id="btnControls">
+        <article class="controls btnControls">
             <h3>Button Suggest Action Config</h3>
-            <p>Use this animation to suggest a button action to the user by drawing attention to it.</p>
-            <button id="btnComponent">Action</button>
+            <ul>
+                <li>Use to suggest a button action to the user by drawing attention to it.</li>
+            </ul>
+            <button class="btn btnComponent">Action</button>
             <br />
-            <label for="btnColorFrom">Default Colour</label><input type="color" id="btnFromColor"/> <br />
-            <label for="btnColorTo">Suggest Colour</label><input type="color" id="btnToColor" />
+
+            <label for="btnToColor">Suggest Colour</label> <input type="color" id="btnToColor" />
+        </article>
+
+         <article class="controls fadeInControls">
+            <h3>Element Fade In Config</h3>
+            <ul>
+                <li>Use to introduce a dynamic piece of content to the user.</li>
+            </ul>
+            <div class="fadeInComponent">
+                <h4>Dynamically Fetched Content</h4>
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia sed sapien vehicula vestibulum. 
+                </p>
+            <div>
+            <br />
         </article>
 
     </div>
