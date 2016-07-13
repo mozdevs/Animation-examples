@@ -49,14 +49,14 @@
         .controls label {
             font-size: 0.8em;
         }
-        .controls li {
+
+        .controls ul {
             font-size: 0.8em;
             text-align: left;
         }
     </style>
 
     <script>
-
         // Slider Control Component - range slider with a display of current value.  
         function SliderControl(config, onValueChange) {
             var controlName = config.controlName || 'Value';
@@ -114,11 +114,10 @@
                 if (btn.getAnimations) {
                     btn.getAnimations().map((anim) => anim.finish());
                 }
-
                 // Play the animation with the newly specified duration
-                btn.animate([
-                    {backgroundColor: [fromColor, toColor, fromColor]}, 
-                ], duration);
+                btn.animate(
+                    {backgroundColor: [fromColor, toColor, fromColor]} 
+                , duration);
             };
 
             // Create slider for the animation duration
@@ -155,7 +154,7 @@
             var fadeInControls = document.querySelector('.fadeInControls');
 
             var fadeInComponent = document.querySelector('.fadeInComponent');
-            var duration = 25000;
+            var duration = 2500;
             var playAnimation = () => {
                 // Stop all current animations
                 if (fadeInComponent.getAnimations) {
@@ -201,7 +200,7 @@
          <article class="controls fadeInControls">
             <h3>Element Fade In Config</h3>
             <ul>
-                <li>Use to introduce a dynamic piece of content to the user.</li>
+                <li>Use to introduce a dynamically loaded piece of content to the user.</li>
             </ul>
             <div class="fadeInComponent">
                 <h4>Dynamically Fetched Content</h4>
