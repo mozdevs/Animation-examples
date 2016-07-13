@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+<head>
+    <title>Web Animations examples</title>
+    <meta charset="utf-8">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: helvetica;
+        }
+        
+        .btn-component {
+            border: 1px solid black;
+            padding: 5px;
+            font-family: georgia;
+            margin-bottom: 20px;
+        }
+
+        .fadeInComponent {
+            width: 80%;
+            border: 1px solid black;
+            margin: auto;
+            padding: 5px;
+            text-align: left;
+            font-size: 0.8em;
+            font-family: georgia;
+        }
+    
+        .expand-component {
+            width: 80%;
+            height: 80px;
+            border: 1px solid black;
+            margin: auto;
+            padding: 5px;
+            text-align: left;
+            font-size: 0.8em;
+            font-family: georgia;
+            overflow: scroll;
+        }
+
+        .controls {
+            text-align: center;
+            width: 20vw;
+            border: 2px solid #4165AD;
+            box-shadow: 3px 3px 3px 2px #ccc;
+            margin: 20px;
+            padding: 10px;
+        }
+    
+        .controls label {
+            font-size: 0.8em;
+        }
+
+        .controls ul {
+            font-size: 0.8em;
+            text-align: left;
+        }
+    </style>
+
+    <script>
+        window.addEventListener('load', function() {
+            var el = document.getElementById('container');
+            btnControls(); // Configure and display button tweakable controls
+            fadeControls(); // Configure and display fade in tweakable controls
+            expandControls(); // Configure and display expand tweakable controls
+        });
+
+        function btnControls() {
+            var controls = document.querySelector('.btn-controls');
+            
+            var btn = document.querySelector('.btn-component');
+
+            // btn animation config vars
+            var duration = 1000;
+            var fromColor = '#FAFAFA',
+                toColor = '#4165AD';
+
+            btn.style.backgroundColor = fromColor;
+
+            var playAnimation = (animationDesc) => { // Called when a variable is changed
+                // Stop all current animations
+                if (btn.getAnimations) {
+                    btn.getAnimations().map((anim) => anim.finish());
+                }
+                // Play the animation with the newly specified duration
+                btn.animate(
+                    {backgroundColor: [fromColor, toColor, fromColor]} 
+                , duration);
+            };
+
+            // Create slider for the animation duration
+            var durationSlider = controls.querySelector('.duration-slider'),
+                durationText = controls.querySelector('.duration-text');
+            durationSlider.dispatchEvent(new Event('change'));
+            durationSlider.addEventListener('change', () => {
+                duration = durationSlider.value * 1000;
+                durationText.textContent = 'Duration: ' + durationSlider.value + 's';
+                playAnimation(); 
+            });
+
+            // Configure colour picker for toColor            
+            var btnToColor = document.getElementById('btnToColor');
+            btnToColor.value = toColor;
+
+            // Changing the colour causes animation to be replayed
+            btnToColor.addEventListener('change', () => {
+                toColor = btnToColor.value;
+                playAnimation();
+            });
+
+            // Clicking anywhere in the box causes animation to be replayed
+            controls.addEventListener('click', () => {
+                playAnimation();
+            });
+        }
+
+        function fadeControls() {
+            var controls = document.querySelector('.fade-controls');
+
+            var fadeInComponent = document.querySelector('.fadeInComponent');
+            var duration = 2500;
+            var playAnimation = () => {
+                // Stop all current animations
+                if (fadeInComponent.getAnimations) {
+                    fadeInComponent.getAnimations().map((anim) => anim.finish());
+                }
+
+                // Play the animation with the newly specified duration
+                fadeInComponent.animate({
+                    opacity: [0, 1]
+                }, duration);
+            };
+
+            var durationSlider = controls.querySelector('.duration-slider'),
+                durationText = controls.querySelector('.duration-text');
+            durationSlider.dispatchEvent(new Event('change'));
+
+            durationSlider.addEventListener('change', () => {
+                duration = durationSlider.value * 1000;
+                durationText.textContent = 'Duration: ' + durationSlider.value + 's';
+                playAnimation(); 
+            });
+        }
+
+        function expandControls() {
+            var controls = document.querySelector('.expand-controls');
+
+            var expandComponent = document.querySelector('.expand-component');
+            var duration = 2500,
+                collapsedHeight = '80px', // Save original height
+                expandHeight = 300 + 'px',
+                expandEasing = 'linear',
+                collapseEasing = 'linear';
+
+            var playAnimation = () => {
+                // Stop all current animations
+                if (expandComponent.getAnimations) {
+                    expandComponent.getAnimations().map((anim) => anim.finish());
+                }
+
+                // Play the animation with the newly specified duration
+                var expandAnimation = expandComponent.animate([
+                    {height: collapsedHeight},
+                    {height: expandHeight, easing: expandEasing},
+                    {height: collapsedHeight, easing: collapseEasing}
+                ], duration);
+            };
+
+            var durationSlider = controls.querySelector('.duration-slider'),
+                durationText = controls.querySelector('.duration-text');
+            durationSlider.dispatchEvent(new Event('change'));
+
+            durationSlider.addEventListener('change', () => {
+                duration = durationSlider.value * 1000;
+                durationText.textContent = 'One-way duration: ' + durationSlider.value + 's';
+                playAnimation(); 
+            });
+
+            var expandHeightSlider = controls.querySelector('.expand-height-slider'),
+                expandHeightText = controls.querySelector('.expand-height-text');
+            expandHeightSlider.dispatchEvent(new Event('change'));
+
+            expandHeightSlider.addEventListener('change', () => {
+                expandHeight = expandHeightSlider.value + 'px';
+                expandHeightText.textContent = 'Expand height: ' + expandHeight;
+                playAnimation();
+            });
+
+            var expandEasingSelect = controls.querySelector('.expand-easing-select'),
+                collapseEasingSelect = controls.querySelector('.collapse-easing-select');
+
+            expandEasingSelect.addEventListener('change', () => {
+                expandEasing = expandEasingSelect.value;
+                playAnimation();
+            });
+
+            collapseEasingSelect.addEventListener('change', () => {
+                collapseEasing = collapseEasingSelect.value;
+                playAnimation();
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+
+        <article class="controls expand-controls">
+            <h3>Expand Element Config</h3>
+            <ul>
+                <li>Use to expand an element in order to reveal more content to the user.</li>
+            </ul>
+
+            <input class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5" /><br />
+            <label for="duration-slider" class="duration-text">One-way duration: 2.5s</label><br />
+
+            <input class="expand-height-slider" type="range" min="200" max="500" step="10" value="350" /><br />
+            <label for="expand-height-slider" class="expand-height-text">Expand Height: 350px</label>
+            <br />
+            <label for="expand-easing-select">Expand Easing:</label>
+            <select class="expand-easing-select" >
+                <option value="linear">Linear</option>
+                <option value="ease-in">Ease In</option>
+                <option value="ease-out">Ease Out</option>
+                <option value="ease-in-out">Ease In Out</option>
+            </select>
+            <br />
+            <label for="collapse-easing-select">Collapse Easing:</label>
+            <select class="collapse-easing-select" >
+                <option value="linear">Linear</option>
+                <option value="ease-in">Ease In</option>
+                <option value="ease-out">Ease Out</option>
+                <option value="ease-in-out">Ease In Out</option>
+            </select>
+
+            <div class="expand-component">
+                <h4>Here is lots of content which can be expanded</h4>
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur finibus nisi at massa accumsan, et aliquet lacus consequat. Proin ultricies leo augue, dignissim placerat ipsum imperdiet sit amet. Nullam iaculis neque ac eros dapibus, vitae pellentesque eros faucibus. Curabitur dignissim lobortis tortor, in viverra nisi congue sit amet.
+                </p>
+            </div>
+
+        </article>
+
+        <article class="controls btn-controls">
+            <h3>Button Suggest Action Config</h3>
+            <ul>
+                <li>Use to suggest a button action to the user by drawing attention to it.</li>
+            </ul>
+            <button class="btn-component">Action</button>
+            <br />
+            
+            <label for="btnToColor">Suggest Colour</label> <input type="color" id="btnToColor" />
+            <br />
+            <input class="duration-slider" type="range" min="0.05" max="2" step="0.05" value="1" /><br />
+            <label for="duration-slider" class="duration-text">Duration: 1s</label>
+        </article>
+
+         <article class="controls fade-controls">
+            <h3>Element Fade In Config</h3>
+            <ul>
+                <li>Use to introduce a dynamically loaded piece of content to the user.</li>
+            </ul>
+            <div class="fadeInComponent">
+                <h4>Dynamically Fetched Content</h4>
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia sed sapien vehicula vestibulum. 
+                </p>
+
+            </div>
+
+            <input class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5" /><br />
+            <label for="duration-slider" class="duration-text">Duration: 2.5s</label>
+        </article>
+
+    </div>
+</body>
+</html>
