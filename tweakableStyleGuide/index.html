@@ -69,7 +69,6 @@
                 label.textContent = config.labelText(val);
             };
 
-
             // Create range slider 
             var rangeSlider = document.createElement('input');
             rangeSlider.setAttribute('type', 'range');
@@ -118,9 +117,7 @@
 
                 // Play the animation with the newly specified duration
                 btn.animate([
-                    {backgroundColor: fromColor}, 
-                    {backgroundColor: toColor},
-                    {backgroundColor: fromColor}
+                    {backgroundColor: [fromColor, toColor, fromColor]}, 
                 ], duration);
             };
 
@@ -166,10 +163,10 @@
                 }
 
                 // Play the animation with the newly specified duration
-                fadeInComponent.animate([
-                    {opacity: 0},
-                    {opacity: 1}
-                ], duration);
+                fadeInComponent.animate({
+                    opacity: [0, 1],
+                    easing: 'ease-in-out'
+                }, duration);
             };
 
             var durationSlider = new SliderControl({
@@ -183,9 +180,7 @@
                 playAnimation();
             });
 
-
             fadeInControls.appendChild(durationSlider);
-
         }
     </script>
 </head>
