@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+<head>
+    <title>Web Animations examples</title>
+    <meta charset="utf-8">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: helvetica;
+        }
+        
+        .sliderControl {
+            
+        }
+
+        .btn {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        .btnComponent {
+            margin-bottom: 20px;
+        }
+
+        .fadeInComponent {
+            width: 80%;
+            border: 1px solid black;
+            margin: auto;
+            padding: 5px;
+            text-align: left;
+            font-size: 0.8em;
+            font-family: georgia;
+        }
+
+        .controls {
+            text-align: center;
+            width: 20vw;
+            border: 2px solid #4165AD;
+            box-shadow: 3px 3px 3px 2px #ccc;
+            margin: 20px;
+            padding: 10px;
+            float: left;
+        }
+    
+        .controls label {
+            font-size: 0.8em;
+        }
+
+        .controls ul {
+            font-size: 0.8em;
+            text-align: left;
+        }
+    </style>
+
+    <script>
+        // Slider Control Component - range slider with a display of current value.  
+        function SliderControl(config, onValueChange) {
+            var controlName = config.controlName || 'Value';
+            var container = document.createElement('div'); 
+            container.className = 'sliderControl';
+
+            // Create label to display value of slider
+            var label = document.createElement('label');
+            var updateLabel = (val) => {
+                label.textContent = config.labelText(val);
+            };
+
+            // Create range slider 
+            var rangeSlider = document.createElement('input');
+            rangeSlider.setAttribute('type', 'range');
+            rangeSlider.setAttribute('min', config.min || 0);
+            rangeSlider.setAttribute('max', config.max || 100);
+            rangeSlider.setAttribute('step', config.step || 1);
+            rangeSlider.setAttribute('value', config.initial || 0);
+            rangeSlider.addEventListener('change', (evt) => {
+                updateLabel(rangeSlider.value);
+                onValueChange(rangeSlider.value);
+            });
+
+            updateLabel(rangeSlider.value);
+
+          
+            container.appendChild(rangeSlider);
+            container.appendChild(document.createElement('br'));
+            container.appendChild(label);
+
+            return container;
+        }
+
+        window.addEventListener('load', function() {
+            var el = document.getElementById('container');
+            initBtnControls(); // Configure and display button tweakable controls
+            initFadeInControls(); // Configure and display fade in tweakable controls
+        });
+
+        function initBtnControls() {
+            var btnControls = document.querySelector('.btnControls');
+            
+            var btn = document.querySelector('.btnComponent');
+
+            // btn animation config vars
+            var duration = 1000;
+            var fromColor = '#FAFAFA',
+                toColor = '#4165AD';
+
+            btn.style.backgroundColor = fromColor;
+
+            var playAnimation = (animationDesc) => { // Called when a variable is changed
+                // Stop all current animations
+                if (btn.getAnimations) {
+                    btn.getAnimations().map((anim) => anim.finish());
+                }
+                // Play the animation with the newly specified duration
+                btn.animate(
+                    {backgroundColor: [fromColor, toColor, fromColor]} 
+                , duration);
+            };
+
+            // Create slider for the animation duration
+            var durationSlider = new SliderControl({
+                min: 0.05,
+                max: 2,
+                step: 0.05,
+                initial: 1,
+                labelText: (val) => 'Duration: ' + val + 's'
+            }, (newDuration) => {
+                duration = newDuration * 1000;
+                playAnimation(); 
+            });
+
+            btnControls.appendChild(durationSlider);
+
+            // Configure colour picker for toColor            
+            var btnToColor = document.getElementById('btnToColor');
+            btnToColor.value = toColor;
+
+            // Changing the colour causes animation to be replayed
+            btnToColor.addEventListener('change', () => {
+                toColor = btnToColor.value;
+                playAnimation();
+            });
+
+            // Clicking anywhere in the box causes animation to be replayed
+            btnControls.addEventListener('click', () => {
+                playAnimation();
+            });
+        }
+
+        function initFadeInControls() {
+            var fadeInControls = document.querySelector('.fadeInControls');
+
+            var fadeInComponent = document.querySelector('.fadeInComponent');
+            var duration = 2500;
+            var playAnimation = () => {
+                // Stop all current animations
+                if (fadeInComponent.getAnimations) {
+                    fadeInComponent.getAnimations().map((anim) => anim.finish());
+                }
+
+                // Play the animation with the newly specified duration
+                fadeInComponent.animate({
+                    opacity: [0, 1],
+                    easing: 'ease-in-out'
+                }, duration);
+            };
+
+            var durationSlider = new SliderControl({
+                min: 0.05,
+                max: 5,
+                step: 0.05,
+                initial: 2.5,
+                labelText: (val) => 'Duration: ' + val + 's'
+            }, (newDuration) => {
+                duration = newDuration * 1000;
+                playAnimation();
+            });
+
+            fadeInControls.appendChild(durationSlider);
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+
+        <article class="controls btnControls">
+            <h3>Button Suggest Action Config</h3>
+            <ul>
+                <li>Use to suggest a button action to the user by drawing attention to it.</li>
+            </ul>
+            <button class="btn btnComponent">Action</button>
+            <br />
+
+            <label for="btnToColor">Suggest Colour</label> <input type="color" id="btnToColor" />
+        </article>
+
+         <article class="controls fadeInControls">
+            <h3>Element Fade In Config</h3>
+            <ul>
+                <li>Use to introduce a dynamically loaded piece of content to the user.</li>
+            </ul>
+            <div class="fadeInComponent">
+                <h4>Dynamically Fetched Content</h4>
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia sed sapien vehicula vestibulum. 
+                </p>
+            <div>
+            <br />
+        </article>
+
+    </div>
+</body>
+</html>
