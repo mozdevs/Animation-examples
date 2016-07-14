@@ -46,11 +46,22 @@
     <aside>
         <h1>Accessibility options</h1>
         <form>
-        <p><label><input type="checkbox" checked>Flash animations</label></p>
+            <p><label><input type="checkbox" checked id="settings-flash">Flash animations</label></p>
+        </form>
     </aside>
 
 <script>
 window.onload = function () {
+    var animSettings = {
+        FLASH: true
+    };
+
+    document.getElementById('settings-flash')
+    .addEventListener('change', function (e) {
+        e.preventDefault();
+        animSettings.FLASH = e.target.checked;
+    });
+
     let flashKeyframes = [
         { background: '#000' },
         { background: '#31ffd5'},
@@ -64,7 +75,7 @@ window.onload = function () {
         flash.finish();
         avatar.addEventListener('click', function (e) {
             e.preventDefault();
-            flash.play();
+            if (animSettings.FLASH) { flash.play(); }
             // TODO: code button action here
         });
     });
