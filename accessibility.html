@@ -35,6 +35,10 @@
         color: #fff;
         cursor: pointer;
     }
+
+    input[type=range] {
+        vertical-align: bottom;
+    }
     </style>
 </head>
 <body>
@@ -47,36 +51,45 @@
         <h1>Accessibility options</h1>
         <form>
             <p><label><input type="checkbox" checked id="settings-flash">Flash animations</label></p>
+            <p><label>Size variation <input type="range" min="100" max="300" value="125" id="settings-size"></label></p>
         </form>
     </aside>
+    <a href="https://jsfiddle.net/k6jy6L98/1/">https://jsfiddle.net/k6jy6L98/1/</a>
 
 <script>
 window.onload = function () {
-    var animSettings = {
-        FLASH: true
-    };
-
-    document.getElementById('settings-flash')
-    .addEventListener('change', function (e) {
-        e.preventDefault();
-        animSettings.FLASH = e.target.checked;
-    });
-
-    let flashKeyframes = [
-        { background: '#000' },
-        { background: '#31ffd5'},
-        { background: '#000'},
-        { background: '#31ffd5'},
-        { background: '#000'}
-    ];
+    var settingsFlashEl = document.getElementById('settings-flash');
+    var settingsSizeEl = document.getElementById('settings-size');
 
     Array.from(document.querySelectorAll('.avatar')).forEach(function (avatar) {
-        let flash = avatar.animate(flashKeyframes, 500);
-        flash.finish();
+        // play flash animation when clicking on avatars
         avatar.addEventListener('click', function (e) {
             e.preventDefault();
-            if (animSettings.FLASH) { flash.play(); }
+            if (settingsFlashEl.checked) { // only play if setting is enabled
+                avatar.animate([
+                    { background: '#000' },
+                    { background: '#31ffd5'},
+                    { background: '#000'},
+                    { background: '#31ffd5'},
+                    { background: '#000'}
+                ], 500);
+            }
             // TODO: code button action here
+        });
+    });
+
+    Array.from(document.querySelectorAll('.avatar')).forEach(function (avatar) {
+        avatar.addEventListener('mouseover', function (e) {
+            let targetScale = settingsSizeEl.value / 100.0;
+            avatar.style.transform = `scale(${targetScale})`;
+            avatar.style['z-index'] = 10;
+            avatar.animate({
+                transform: ['scale(1)', `scale(${targetScale})`]
+            }, 250);
+        });
+        avatar.addEventListener('mouseout', function (e) {
+            avatar.style.transform = 'scale(1)';
+            avatar.style['z-index'] = 1;
         });
     });
 }
