@@ -5,11 +5,11 @@
     <link rel="stylesheet" href="styles.css" type="text/css">
 
     <style>
-    .contact-selector li {
+    .avatar-selector li {
         list-style-type: none;
         display: inline-block;
     }
-    .contact-selector ul {
+    .avatar-selector ul {
         padding-left: 0;
         font-size: 0;
     }
@@ -39,42 +39,115 @@
     input[type=range] {
         vertical-align: bottom;
     }
+
+    main {
+        width: 300px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .contact {
+        background: #efefef;
+        box-sizing: border-box;
+        border-top: 8px solid #ccc;
+
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 100%;
+    }
+
+    .contact.active {
+        z-index: 10;
+        top: 0;
+    }
+
+    .contact-display {
+        height: 200px;
+        margin-bottom: 1em;
+        display: flex;
+        overflow: hidden;
+        position: relative;
+    }
     </style>
 </head>
 <body>
-    <nav class="contact-selector"><ul>
-        <li><button class="avatar selected">JS</button></li>
-        <li><button class="avatar">DT</button></li>
-        <li><button class="avatar">TL</button></li>
-    </ul></nav>
-    <aside>
-        <h1>Accessibility options</h1>
-        <form>
-            <p><label><input type="checkbox" checked id="settings-flash">Flash animations</label></p>
-            <p><label>Size variation <input type="range" min="100" max="300" value="125" id="settings-size"></label></p>
-        </form>
-    </aside>
+    <main>
+        <section class="contact-display">
+            <section class="contact active" data-contact="js">Jon Snow</section>
+            <section class="contact" data-contact="dt">Daenerys Targaryen</section>
+            <section class="contact" data-contact="tl">Tyrion Lannister</section>
+        </section>
+        <nav class="avatar-selector"><ul>
+            <li><button class="avatar selected disabled" data-contact="js">JS</button></li>
+            <li><button class="avatar" data-contact="dt">DT</button></li>
+            <li><button class="avatar" data-contact="tl">TL</button></li>
+        </ul></nav>
+        <aside>
+            <h1>Accessibility options</h1>
+            <form>
+                <p><label><input type="checkbox" checked id="settings-flash">Flash animations</label></p>
+                <p><label>Size variation <input type="range" min="100" max="300" value="125" id="settings-size"></label></p>
+            </form>
+        </aside>
+    </main>
     <a href="https://jsfiddle.net/k6jy6L98/1/">https://jsfiddle.net/k6jy6L98/1/</a>
 
 <script>
+
+var settingsFlashEl, settingsSizeEl;
+
+function scrollToContact(contactId) {
+    let oldActive = document.querySelector('.contact.active');
+    oldActive.style['z-index'] = parseInt(oldActive.style['z-index'] - 1);
+
+    let contact = document.querySelector(`.contact[data-contact=${contactId}]`);
+    contact.classList.add('active');
+    contact.animate({top: ['100%', '0']}, 500).finished.then(function () {
+        oldActive.classList.remove('active');
+        oldActive.style['z-index'] = '';
+    });
+}
+
+function flashAvatarButton(element) {
+    if (settingsFlashEl.checked) { // only play if setting is enabled
+        element.animate([
+            { background: '#000' },
+            { background: '#31ffd5'},
+            { background: '#000'},
+            { background: '#31ffd5'},
+            { background: '#000'}
+        ], 500);
+    }
+}
+
+function selectAvatarButton(element) {
+    // disable current button and re-enable the rest
+    Array.from(document.querySelectorAll('.avatar'))
+    .forEach(function (button) {
+        button.disabled = false;
+        button.classList.remove('selected');
+    });
+    element.disabled = true;
+    element.classList.add('selected');
+}
+
 window.onload = function () {
-    var settingsFlashEl = document.getElementById('settings-flash');
-    var settingsSizeEl = document.getElementById('settings-size');
+    settingsFlashEl = document.getElementById('settings-flash');
+    settingsSizeEl = document.getElementById('settings-size');
 
     Array.from(document.querySelectorAll('.avatar')).forEach(function (avatar) {
         // play flash animation when clicking on avatars
         avatar.addEventListener('click', function (e) {
             e.preventDefault();
-            if (settingsFlashEl.checked) { // only play if setting is enabled
-                avatar.animate([
-                    { background: '#000' },
-                    { background: '#31ffd5'},
-                    { background: '#000'},
-                    { background: '#31ffd5'},
-                    { background: '#000'}
-                ], 500);
-            }
-            // TODO: code button action here
+            flashAvatarButton(avatar);
+            selectAvatarButton(avatar);
+            scrollToContact(avatar.dataset.contact);
         });
     });
 
