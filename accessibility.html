@@ -77,6 +77,16 @@
         overflow: hidden;
         position: relative;
     }
+
+    .settings {
+        text-align: left;
+        margin-top: 2em;
+        border-top: 1px solid #ccc;
+        padding-top: 1em;
+    }
+    .settings h1 {
+        font-size: 1em;
+    }
     </style>
 </head>
 <body>
@@ -91,21 +101,21 @@
             <li><button class="avatar" data-contact="dt">DT</button></li>
             <li><button class="avatar" data-contact="tl">TL</button></li>
         </ul></nav>
-        <aside>
+        <aside class="settings">
             <h1>Accessibility options</h1>
             <form>
                 <p><label><input type="checkbox" checked id="settings-flash">Flash animations</label></p>
                 <p><label>Size variation <input type="range" min="100" max="300" value="125" id="settings-size"></label></p>
+                <p><label>Slow movement<input type="range" min="10" max="100" value="40" id="settings-speed"></label></p>
             </form>
         </aside>
     </main>
-    <a href="https://jsfiddle.net/k6jy6L98/1/">https://jsfiddle.net/k6jy6L98/1/</a>
-
+    
 <script>
 
 // TODO: add TONS of comments to all of this
 
-var settingsFlashEl, settingsSizeEl;
+var settingsFlashEl, settingsSizeEl, settingsSpeedEl;
 
 function scrollToContact(contactId) {
     let oldActive = document.querySelector('.contact.active');
@@ -114,7 +124,8 @@ function scrollToContact(contactId) {
     let contact = document.querySelector(`.contact[data-contact=${contactId}]`);
     contact.classList.add('active');
 
-    contact.animate({top: ['100%', '0']}, 250)
+    let targetSpeed = 1000 * (settingsSpeedEl.value / 100.0);
+    contact.animate({top: ['100%', '0']}, targetSpeed)
     .addEventListener('finish', function () {
         oldActive.classList.remove('active');
         oldActive.style['z-index'] = '';
@@ -170,6 +181,7 @@ function shrinkAvatar(element) {
 window.onload = function () {
     settingsFlashEl = document.getElementById('settings-flash');
     settingsSizeEl = document.getElementById('settings-size');
+    settingsSpeedEl = document.getElementById('settings-speed');
 
     Array.from(document.querySelectorAll('.avatar')).forEach(function (avatar) {
         // play flash animation when clicking on avatars
