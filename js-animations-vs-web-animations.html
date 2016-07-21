@@ -24,7 +24,7 @@
 					var el = document.createElement('div');
 					elementsContainer.appendChild(el);
 					var x0 = getRandomInRange(100);
-					var x1 = getRandomInRange(100);
+					var x1 = getRandomInRange(200);
 
 					setDivX(el, x0);
 					objs.push({ x0: x0, x1: x1, x: x0, el: el });
@@ -44,8 +44,10 @@
 
 				function stopAnimations() {
 					console.log('stop!');
-					// TODO clear rafId
+					cancelAnimationFrame(rafId);
+					rafId = null;
 					TWEEN.getAll().forEach((t) => t.stop());
+					TWEEN.removeAll();
 				}
 
 				function startJSAnimations() {
@@ -53,6 +55,8 @@
 					console.log('js animations');
 
 					objs.forEach((obj) => {
+
+						obj.x = obj.x0;
 
 						new TWEEN.Tween(obj)
 							.to({ x: obj.x1 }, tweenLength)
@@ -62,7 +66,7 @@
 							.onUpdate(() => {
 								setDivX(obj.el, obj.x);
 							})
-							.easing(TWEEN.Easing.Cubic.InOut)
+							.easing(TWEEN.Easing.Quadratic.Out)
 							.repeat(Infinity)
 							.start();
 
@@ -73,8 +77,11 @@
 				}
 
 				function render(timestamp) {
-					requestAnimationFrame(render);
-					TWEEN.update(timestamp);
+					
+					if(rafId) {
+						requestAnimationFrame(render);
+						TWEEN.update(timestamp);
+					}
 				}
 
 				function startWebAnimations() {
