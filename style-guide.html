@@ -3,62 +3,36 @@
 <head>
     <title>Web Animations examples</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css" type="text/css">
     <style>
-        * {
-            box-sizing: border-box;
+        .btn-component:active, .btn-component:hover {
+            background: #31ffd5;
+            color: #000;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: helvetica;
-        }
-        
-        .btn-component {
+        .fade-component, .expand-component {
             border: 1px solid black;
-            padding: 5px;
-            font-family: georgia;
-            margin-bottom: 20px;
-        }
-
-        .fade-component {
-            width: 80%;
-            border: 1px solid black;
-            margin: auto;
-            padding: 5px;
-            text-align: left;
+            padding: 0.5em;
             font-size: 0.8em;
-            font-family: georgia;
         }
 
         .expand-component {
-            width: 80%;
             height: 80px;
-            border: 1px solid black;
-            margin: auto;
-            padding: 5px;
-            text-align: left;
-            font-size: 0.8em;
-            font-family: georgia;
-            overflow: scroll;
+            overflow-y: scroll;
         }
 
         .controls {
-            text-align: center;
-            width: 20vw;
-            border: 2px solid #4165AD;
-            box-shadow: 3px 3px 3px 2px #ccc;
-            margin: 20px;
-            padding: 10px;
+            border: 1px solid #000;
+            margin: 2em;
+            padding: 1em;
         }
 
-        .controls label {
-            font-size: 0.8em;
+        .controls > *:first-child {
+            margin-top: 0;
         }
 
-        .controls ul {
+        label {
             font-size: 0.8em;
-            text-align: left;
         }
     </style>
 
@@ -71,13 +45,12 @@
 
         function btnControls() {
             var controls = document.querySelector('.btn-controls');
-            
             var btn = document.querySelector('.btn-component');
 
             // btn animation config vars
             var duration = 1000;
-            var fromColor = '#FAFAFA',
-            toColor = '#4165AD';
+            var fromColor = '#31ffd5',
+            toColor = '#000';
 
             btn.style.backgroundColor = fromColor;
 
@@ -99,10 +72,10 @@
             durationSlider.addEventListener('change', () => {
                 duration = durationSlider.value * 1000;
                 durationText.textContent = 'Duration: ' + durationSlider.value + 's';
-                playAnimation(); 
+                playAnimation();
             });
 
-            // Configure colour picker for toColor            
+            // Configure colour picker for toColor
             var btnToColor = document.getElementById('btnToColor');
             btnToColor.value = toColor;
 
@@ -143,7 +116,7 @@
             durationSlider.addEventListener('change', () => {
                 duration = durationSlider.value * 1000;
                 durationText.textContent = 'Duration: ' + durationSlider.value + 's';
-                playAnimation(); 
+                playAnimation();
             });
         }
 
@@ -152,8 +125,8 @@
 
             var expandComponent = document.querySelector('.expand-component');
             var duration = 2500,
-                collapsedHeight = '80px', // Save original height
-                expandHeight = 300 + 'px',
+                collapsedHeight = parseInt(getComputedStyle(expandComponent).height, 10), // Save original height
+                expandHeightBy = 350,
                 expandEasing = 'linear',
                 collapseEasing = 'linear';
 
@@ -162,14 +135,14 @@
                 if (expandComponent.getAnimations) {
                     expandComponent.getAnimations().map((anim) => anim.finish());
                 }
-
+                console.log((collapsedHeight + expandHeightBy) + 'px');
                 // Play the animation with the newly specified duration
                 var expandAnimation = expandComponent.animate([
-                    {height: collapsedHeight},
-                    {height: expandHeight, easing: expandEasing},
-                    {height: collapsedHeight, easing: collapseEasing}
+                    {height: collapsedHeight + 'px'},
+                    {height: (collapsedHeight + expandHeightBy) + 'px', easing: expandEasing},
+                    {height: collapsedHeight + 'px', easing: collapseEasing}
                     ], duration);
-            };
+                };
 
             // Configure duration slider
             var durationSlider = controls.querySelector('.duration-slider'),
@@ -179,23 +152,23 @@
             durationSlider.addEventListener('change', () => {
                 duration = durationSlider.value * 1000;
                 durationText.textContent = 'One-way duration: ' + durationSlider.value + 's';
-                playAnimation(); 
+                playAnimation();
             });
 
             // Configure height slider
-            var expandHeightSlider = controls.querySelector('.expand-height-slider'),
-            expandHeightText = controls.querySelector('.expand-height-text');
+            var expandHeightSlider = controls.querySelector('.height-slider'),
+            expandHeightText = controls.querySelector('.height-text');
             expandHeightSlider.dispatchEvent(new Event('change'));
 
             expandHeightSlider.addEventListener('change', () => {
-                expandHeight = expandHeightSlider.value + 'px';
-                expandHeightText.textContent = 'Expand height: ' + expandHeight;
+                expandHeightBy = parseInt(expandHeightSlider.value, 10);
+                expandHeightText.textContent = 'Expand height by: ' + expandHeightBy + 'px';
                 playAnimation();
             });
 
             // Configure easing sliders for expanding a collapsing
-            var expandEasingSelect = controls.querySelector('.expand-easing-select'),
-            collapseEasingSelect = controls.querySelector('.collapse-easing-select');
+            var expandEasingSelect = controls.querySelector('.expand-easing'),
+            collapseEasingSelect = controls.querySelector('.collapse-easing');
 
             expandEasingSelect.addEventListener('change', () => {
                 expandEasing = expandEasingSelect.value;
@@ -210,73 +183,77 @@
     </script>
 </head>
 <body>
-    <div id="container">
-        <article class="controls expand-controls">
-            <h3>Expand Element Config</h3>
-            <ul>
-                <li>Use to expand an element in order to reveal more content to the user.</li>
-            </ul>
+    <article class="controls expand-controls">
+        <h1>Expand Element Config</h1>
+        <p>Use to expand an element in order to reveal more content to the user.</p>
 
-            <input class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5" /><br />
-            <label for="duration-slider" class="duration-text">One-way duration: 2.5s</label><br />
+        <form>
+            <p>
+                <input id="expand-duration-slider" class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5">
+                <label class="duration-text" for="expand-duration-slider">
+                    One-way duration: 2.5s </label>
+            </p>
 
-            <input class="expand-height-slider" type="range" min="200" max="500" step="10" value="350" /><br />
-            <label for="expand-height-slider" class="expand-height-text">Expand Height: 350px</label>
-            <br />
-            <label for="expand-easing-select">Expand Easing:</label>
-            <select class="expand-easing-select" >
-                <option value="linear">Linear</option>
-                <option value="ease-in">Ease In</option>
-                <option value="ease-out">Ease Out</option>
-                <option value="ease-in-out">Ease In Out</option>
-            </select>
-            <br />
-            <label for="collapse-easing-select">Collapse Easing:</label>
-            <select class="collapse-easing-select" >
-                <option value="linear">Linear</option>
-                <option value="ease-in">Ease In</option>
-                <option value="ease-out">Ease Out</option>
-                <option value="ease-in-out">Ease In Out</option>
-            </select>
+            <p>
+                <input id="expand-height-slider" class="height-slider" type="range" min="0" max="500" step="10" value="350" />
+                <label class="height-text" for="expand-height-slider">
+                    Expand height By: 350px</label>
+            </p>
 
-            <div class="expand-component">
-                <h4>Here is lots of content which can be expanded</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur finibus nisi at massa accumsan, et aliquet lacus consequat. Proin ultricies leo augue, dignissim placerat ipsum imperdiet sit amet. Nullam iaculis neque ac eros dapibus, vitae pellentesque eros faucibus. Curabitur dignissim lobortis tortor, in viverra nisi congue sit amet.
-                </p>
-            </div>
+            <p><label>Expand Easing:
+                <select class="expand-easing">
+                    <option value="linear">Linear</option>
+                    <option value="ease-in">Ease In</option>
+                    <option value="ease-out">Ease Out</option>
+                    <option value="ease-in-out">Ease In Out</option>
+                </select>
+            </label></p>
+            <p><label>Collapse Easing:
+                <select class="collapse-easing">
+                    <option value="linear">Linear</option>
+                    <option value="ease-in">Ease In</option>
+                    <option value="ease-out">Ease Out</option>
+                    <option value="ease-in-out">Ease In Out</option>
+                </select>
+            </label></p>
+        </form>
 
-        </article>
+        <section class="expand-component">
+            <h1>Here is lots of content which can be expanded</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur finibus nisi at massa accumsan, et aliquet lacus consequat. Proin ultricies leo augue, dignissim placerat ipsum imperdiet sit amet. Nullam iaculis neque ac eros dapibus, vitae pellentesque eros faucibus. Curabitur dignissim lobortis tortor, in viverra nisi congue sit amet.</p>
+        </section>
+    </article><!-- expand controls -->
 
-        <article class="controls btn-controls">
-            <h3>Button Suggest Action Config</h3>
-            <ul>
-                <li>Use to suggest a button action to the user by drawing attention to it.</li>
-            </ul>
-            <button class="btn-component">Action</button>
-            <br />
-            
-            <label for="btnToColor">Suggest Colour</label> <input type="color" id="btnToColor" />
-            <br />
-            <input class="duration-slider" type="range" min="0.05" max="2" step="0.05" value="1" /><br />
-            <label for="duration-slider" class="duration-text">Duration: 1s</label>
-        </article>
+    <article class="controls btn-controls">
+        <h1>Button Suggest Action Config</h1>
+        <p>Use to suggest a button action to the user by drawing attention to it.</p>
 
-        <article class="controls fade-controls">
-            <h3>Element Fade In Config</h3>
-            <ul>
-                <li>Use to introduce a dynamically loaded piece of content to the user.</li>
-            </ul>
-            <div class="fade-component">
-                <h4>Dynamically Fetched Content</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia sed sapien vehicula vestibulum. 
-                </p>
-            </div>
+        <p><button class="btn-component" type="button">Action</button>
 
-            <input class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5" /><br />
-            <label for="duration-slider" class="duration-text">Duration: 2.5s</label>
-        </article>
-    </div>
+        <form>
+            <p><label>Suggest Colour:
+                <input type="color" id="btnToColor"></label></p>
+            <p>
+                <input id="button-duration-slider" class="duration-slider" type="range" min="0.05" max="2" step="0.05" value="1">
+                <label for="button-duration-slider" class="duration-text">Duration: 1s</label></p>
+        </form>
+    </article>
+
+    <article class="controls fade-controls">
+        <h1>Element Fade In Config</h1>
+        <p>Use to introduce a dynamically loaded piece of content to the user.</p>
+
+        <section class="fade-component">
+            <h1>Dynamically Fetched Content</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia sed sapien vehicula vestibulum.</p>
+        </section>
+
+        <form>
+            <p>
+                <input id="fade-duration-slider" class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5">
+                <label for="fade-duration-slider" class="duration-text">Duration: 2.5s</label>
+            </p>
+        </form>
+    </article>
 </body>
 </html>
