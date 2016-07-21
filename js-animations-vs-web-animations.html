@@ -88,22 +88,14 @@
 					stopAnimations();
 					console.log('web animations');
 
-					var obj = objs[0];
-					setDivX(obj.el, obj.x0);
+					objs.forEach((obj) => {
+						setDivX(obj.el, obj.x0);
 
-					var effect = new KeyframeEffect(
-						obj.el,
-						[
+						obj.el.animate([
 							{ transform: 'translateX(' + obj.x0 + 'px)' },
 							{ transform: 'translateX(' + obj.x1 + 'px)' },
-						],
-						{ duration: tweenLength }
-						);
-					effect.timing.iterationCount = Infinity;
-
-
-					var animation = new Animation(effect, document.timeline);
-					animation.play();
+						], { duration: tweenLength, iterations: Infinity });
+					});
 
 				}
 
