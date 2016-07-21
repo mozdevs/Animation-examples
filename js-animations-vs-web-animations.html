@@ -88,6 +88,20 @@
 					stopAnimations();
 					console.log('web animations');
 
+					var obj = objs[0];
+					setDivX(obj.el, obj.x0);
+
+					var keyframes = new KeyframeEffect(
+						obj.el,
+						[
+							{ transform: 'translateX(' + obj.x0 + 'px)' },
+							{ transform: 'translateX(' + obj.x1 + 'px)' },
+						],
+						{ duration: tweenLength }
+					);
+
+					var animation = new Animation(keyframes, document.timeline);
+					animation.play();
 
 				}
 
