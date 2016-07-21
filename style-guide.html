@@ -51,7 +51,6 @@
 
         function btnControls() {
             var controls = document.querySelector('.btn-controls');
-
             var btn = document.querySelector('.btn-component');
 
             // btn animation config vars
@@ -132,7 +131,9 @@
 
             var expandComponent = document.querySelector('.expand-component');
             var duration = 2500,
+                // TODO: get actual height from element
                 collapsedHeight = '80px', // Save original height
+                // TODO: make this an height relative to actual height
                 expandHeight = 300 + 'px',
                 expandEasing = 'linear',
                 collapseEasing = 'linear';
@@ -163,8 +164,8 @@
             });
 
             // Configure height slider
-            var expandHeightSlider = controls.querySelector('.expand-height-slider'),
-            expandHeightText = controls.querySelector('.expand-height-text');
+            var expandHeightSlider = controls.querySelector('.height-slider'),
+            expandHeightText = controls.querySelector('.height-text');
             expandHeightSlider.dispatchEvent(new Event('change'));
 
             expandHeightSlider.addEventListener('change', () => {
@@ -174,8 +175,8 @@
             });
 
             // Configure easing sliders for expanding a collapsing
-            var expandEasingSelect = controls.querySelector('.expand-easing-select'),
-            collapseEasingSelect = controls.querySelector('.collapse-easing-select');
+            var expandEasingSelect = controls.querySelector('.expand-easing'),
+            collapseEasingSelect = controls.querySelector('.collapse-easing');
 
             expandEasingSelect.addEventListener('change', () => {
                 expandEasing = expandEasingSelect.value;
@@ -195,16 +196,20 @@
         <p>Use to expand an element in order to reveal more content to the user.</p>
 
         <form>
-            <p><label class="duration-text">
-                <input class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5">
-                One-way duration: 2.5s</label></p>
+            <p>
+                <input id="expand-duration-slider" class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5">
+                <label class="duration-text" for="expand-duration-slider">
+                    One-way duration: 2.5s </label>
+            </p>
 
-            <p><label class="expand-height-text">
-                <input class="expand-height-slider" type="range" min="200" max="500" step="10" value="350" />
-                Expand Height: 350px</label></p>
+            <p>
+                <input id="expand-height-slider" class="height-slider" type="range" min="200" max="500" step="10" value="350" />
+                <label class="height-text" for="expand-height-slider">
+                    Expand Height: 350px</label>
+            </p>
 
             <p><label>Expand Easing:
-                <select class="expand-easing-select" id="expand-easing-select">
+                <select class="expand-easing">
                     <option value="linear">Linear</option>
                     <option value="ease-in">Ease In</option>
                     <option value="ease-out">Ease Out</option>
@@ -212,7 +217,7 @@
                 </select>
             </label></p>
             <p><label>Collapse Easing:
-                <select class="collapse-easing-select" >
+                <select class="collapse-easing">
                     <option value="linear">Linear</option>
                     <option value="ease-in">Ease In</option>
                     <option value="ease-out">Ease Out</option>
