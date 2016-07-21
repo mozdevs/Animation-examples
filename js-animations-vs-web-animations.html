@@ -80,6 +80,7 @@
 							})
 							.easing(TWEEN.Easing.Quadratic.Out)
 							.repeat(Infinity)
+							.yoyo(true)
 							.start();
 
 					});
@@ -108,7 +109,7 @@
 						obj.el.animate([
 							{ transform: 'translateX(' + obj.x0 + 'px)' },
 							{ transform: 'translateX(' + obj.x1 + 'px)' },
-						], { duration: tweenLength, iterations: Infinity, easing: 'ease-out' });
+						], { duration: tweenLength, iterations: Infinity, easing: 'ease-out', direction: 'alternate' });
 					});
 
 				}
