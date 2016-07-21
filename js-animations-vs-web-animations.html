@@ -48,6 +48,13 @@
 					rafId = null;
 					TWEEN.getAll().forEach((t) => t.stop());
 					TWEEN.removeAll();
+
+					objs.forEach((obj) => {
+						obj.el.getAnimations()
+							.forEach((anim) => {
+								anim.cancel();
+							});
+					});
 				}
 
 				function startJSAnimations() {
