@@ -54,3 +54,7 @@ p, li {
 li {
     margin: 0.8em 0;
 }
+
+input[type=range] {
+    vertical-align: bottom;
+}
