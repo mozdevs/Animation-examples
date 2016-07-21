@@ -126,7 +126,7 @@
             var expandComponent = document.querySelector('.expand-component');
             var duration = 2500,
                 collapsedHeight = parseInt(getComputedStyle(expandComponent).height, 10), // Save original height
-                expandHeightBy = 300,
+                expandHeightBy = 350,
                 expandEasing = 'linear',
                 collapseEasing = 'linear';
 
@@ -135,14 +135,14 @@
                 if (expandComponent.getAnimations) {
                     expandComponent.getAnimations().map((anim) => anim.finish());
                 }
-
+                console.log((collapsedHeight + expandHeightBy) + 'px');
                 // Play the animation with the newly specified duration
                 var expandAnimation = expandComponent.animate([
                     {height: collapsedHeight + 'px'},
                     {height: (collapsedHeight + expandHeightBy) + 'px', easing: expandEasing},
                     {height: collapsedHeight + 'px', easing: collapseEasing}
                     ], duration);
-            };
+                };
 
             // Configure duration slider
             var durationSlider = controls.querySelector('.duration-slider'),
@@ -161,8 +161,8 @@
             expandHeightSlider.dispatchEvent(new Event('change'));
 
             expandHeightSlider.addEventListener('change', () => {
-                expandHeight = expandHeightSlider.value + 'px';
-                expandHeightText.textContent = 'Expand height: ' + expandHeight;
+                expandHeightBy = parseInt(expandHeightSlider.value, 10);
+                expandHeightText.textContent = 'Expand height by: ' + expandHeightBy + 'px';
                 playAnimation();
             });
 
@@ -195,9 +195,9 @@
             </p>
 
             <p>
-                <input id="expand-height-slider" class="height-slider" type="range" min="200" max="500" step="10" value="350" />
+                <input id="expand-height-slider" class="height-slider" type="range" min="0" max="500" step="10" value="350" />
                 <label class="height-text" for="expand-height-slider">
-                    Expand Height: 350px</label>
+                    Expand height By: 350px</label>
             </p>
 
             <p><label>Expand Easing:
