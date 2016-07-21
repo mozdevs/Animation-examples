@@ -47,7 +47,6 @@
 				}
 
 				function stopAnimations() {
-					console.log('stop!');
 					cancelAnimationFrame(rafId);
 					rafId = null;
 					TWEEN.getAll().forEach((t) => t.stop());
@@ -99,7 +98,6 @@
 
 				function startWebAnimations() {
 					stopAnimations();
-					console.log('web animations');
 
 					jsAnimsBtn.classList.remove('selected');
 					webAnimsBtn.classList.add('selected');
@@ -133,7 +131,6 @@
 			}
 
 			.selected {
-				xbox-shadow: 1px 1px 10px yellow;
 				border-bottom: 3px solid red;
 				opacity: 1.0;
 				background: #fff;
@@ -161,7 +158,6 @@
 				width: 50%;
 				flex-grow: 1;
 				background-color: #e00;
-				
 			}
 		</style>
 	</body>
