@@ -135,7 +135,6 @@
                 if (expandComponent.getAnimations) {
                     expandComponent.getAnimations().map((anim) => anim.finish());
                 }
-                console.log((collapsedHeight + expandHeightBy) + 'px');
                 // Play the animation with the newly specified duration
                 var expandAnimation = expandComponent.animate([
                     {height: collapsedHeight + 'px'},
