@@ -91,16 +91,18 @@
 					var obj = objs[0];
 					setDivX(obj.el, obj.x0);
 
-					var keyframes = new KeyframeEffect(
+					var effect = new KeyframeEffect(
 						obj.el,
 						[
 							{ transform: 'translateX(' + obj.x0 + 'px)' },
 							{ transform: 'translateX(' + obj.x1 + 'px)' },
 						],
 						{ duration: tweenLength }
-					);
+						);
+					effect.timing.iterationCount = Infinity;
 
-					var animation = new Animation(keyframes, document.timeline);
+
+					var animation = new Animation(effect, document.timeline);
 					animation.play();
 
 				}
