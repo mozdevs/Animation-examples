@@ -14,7 +14,7 @@
 		</main>
 		<script>
 			window.onload = function() {
-				var numElements = 500;
+				var numElements = 300;
 				var elementsContainer = document.getElementById('elements');
 				var jsAnimsBtn = document.getElementById('jsanims');
 				var webAnimsBtn = document.getElementById('webanims');
@@ -25,8 +25,8 @@
 				for(var i = 0; i < numElements; i++) {
 					var el = document.createElement('div');
 					elementsContainer.appendChild(el);
-					var x0 = getRandomInRange(100);
-					var x1 = getRandomInRange(500);
+					var x0 = getRandomInRange(200);
+					var x1 = getRandomInRange(200);
 
 					setDivX(el, x0);
 					objs.push({ x0: x0, x1: x1, x: x0, el: el });
@@ -118,6 +118,10 @@
 			};
 		</script>
 		<style>
+			body {
+				overflow: hidden;
+			}
+			
 			h1 {
 				z-index: 1000;
 				position: relative;
