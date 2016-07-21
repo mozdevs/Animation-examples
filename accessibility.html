@@ -35,6 +35,9 @@
         color: #fff;
         cursor: pointer;
     }
+    .avatar:disabled{
+        cursor: not-allowed;
+    }
 
     input[type=range] {
         vertical-align: bottom;
@@ -84,7 +87,7 @@
             <section class="contact" data-contact="tl">Tyrion Lannister</section>
         </section>
         <nav class="avatar-selector"><ul>
-            <li><button class="avatar selected disabled" data-contact="js">JS</button></li>
+            <li><button class="avatar selected" disabled data-contact="js">JS</button></li>
             <li><button class="avatar" data-contact="dt">DT</button></li>
             <li><button class="avatar" data-contact="tl">TL</button></li>
         </ul></nav>
@@ -100,6 +103,8 @@
 
 <script>
 
+// TODO: add TONS of comments to all of this
+
 var settingsFlashEl, settingsSizeEl;
 
 function scrollToContact(contactId) {
@@ -108,9 +113,12 @@ function scrollToContact(contactId) {
 
     let contact = document.querySelector(`.contact[data-contact=${contactId}]`);
     contact.classList.add('active');
-    contact.animate({top: ['100%', '0']}, 500).finished.then(function () {
+
+    contact.animate({top: ['100%', '0']}, 250)
+    .addEventListener('finish', function () {
         oldActive.classList.remove('active');
         oldActive.style['z-index'] = '';
+        selectAvatarButton(document.querySelector(`.avatar[data-contact=${contactId}]`));
     });
 }
 
@@ -126,15 +134,37 @@ function flashAvatarButton(element) {
     }
 }
 
+
+function disableAvatarButtons() {
+    Array.from(document.querySelectorAll('.avatar'))
+    .forEach(function (button) {
+        button.disabled = true;
+    });
+}
+
 function selectAvatarButton(element) {
     // disable current button and re-enable the rest
     Array.from(document.querySelectorAll('.avatar'))
     .forEach(function (button) {
         button.disabled = false;
         button.classList.remove('selected');
-    });
+    })
     element.disabled = true;
     element.classList.add('selected');
+}
+
+function enlargeAvatar(element) {
+    let targetScale = settingsSizeEl.value / 100.0;
+    element.style.transform = `scale(${targetScale})`;
+    element.style['z-index'] = 10;
+    element.animate({
+        transform: ['scale(1)', `scale(${targetScale})`]
+    }, 250);
+}
+
+function shrinkAvatar(element) {
+    element.style.transform = 'scale(1)';
+    element.style['z-index'] = 1;
 }
 
 window.onload = function () {
@@ -147,22 +177,17 @@ window.onload = function () {
             e.preventDefault();
             flashAvatarButton(avatar);
             selectAvatarButton(avatar);
+            disableAvatarButtons();
             scrollToContact(avatar.dataset.contact);
         });
     });
 
     Array.from(document.querySelectorAll('.avatar')).forEach(function (avatar) {
         avatar.addEventListener('mouseover', function (e) {
-            let targetScale = settingsSizeEl.value / 100.0;
-            avatar.style.transform = `scale(${targetScale})`;
-            avatar.style['z-index'] = 10;
-            avatar.animate({
-                transform: ['scale(1)', `scale(${targetScale})`]
-            }, 250);
+            enlargeAvatar(avatar);
         });
         avatar.addEventListener('mouseout', function (e) {
-            avatar.style.transform = 'scale(1)';
-            avatar.style['z-index'] = 1;
+            shrinkAvatar(avatar);
         });
     });
 }
