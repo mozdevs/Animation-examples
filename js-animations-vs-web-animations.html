@@ -14,24 +14,28 @@
 		</main>
 		<script>
 			window.onload = function() {
-				var numElements = 10;
+				var numElements = 500;
 				var elementsContainer = document.getElementById('elements');
+				var jsAnimsBtn = document.getElementById('jsanims');
+				var webAnimsBtn = document.getElementById('webanims');
 				var objs = [];
 				var rafId;
-				var tweenLength = 1000;
+				var tweenLength = 1500;
 				
 				for(var i = 0; i < numElements; i++) {
 					var el = document.createElement('div');
 					elementsContainer.appendChild(el);
 					var x0 = getRandomInRange(100);
-					var x1 = getRandomInRange(200);
+					var x1 = getRandomInRange(500);
 
 					setDivX(el, x0);
 					objs.push({ x0: x0, x1: x1, x: x0, el: el });
 				}
 
-				document.getElementById('jsanims').addEventListener('click', startJSAnimations);
-				document.getElementById('webanims').addEventListener('click', startWebAnimations);
+				jsAnimsBtn.addEventListener('click', startJSAnimations);
+				webAnimsBtn.addEventListener('click', startWebAnimations);
+
+				startJSAnimations();
 
 				function getRandomInRange(range) {
 					return Math.floor(range * (Math.random() - 0.5));
@@ -43,7 +47,6 @@
 				}
 
 				function stopAnimations() {
-					console.log('stop!');
 					cancelAnimationFrame(rafId);
 					rafId = null;
 					TWEEN.getAll().forEach((t) => t.stop());
@@ -59,7 +62,9 @@
 
 				function startJSAnimations() {
 					stopAnimations();
-					console.log('js animations');
+
+					jsAnimsBtn.classList.add('selected');
+					webAnimsBtn.classList.remove('selected');
 
 					objs.forEach((obj) => {
 
@@ -93,7 +98,9 @@
 
 				function startWebAnimations() {
 					stopAnimations();
-					console.log('web animations');
+
+					jsAnimsBtn.classList.remove('selected');
+					webAnimsBtn.classList.add('selected');
 
 					objs.forEach((obj) => {
 						setDivX(obj.el, obj.x0);
@@ -117,6 +124,16 @@
 
 			input {
 				font-size: inherit;
+				opacity: 0.75;
+				transition: all 0.2s ease-in;
+				border-width: 0px;
+				box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+			}
+
+			.selected {
+				border-bottom: 3px solid red;
+				opacity: 1.0;
+				background: #fff;
 			}
 
 			main {
@@ -139,10 +156,8 @@
 
 			#elements > div {
 				width: 50%;
-				xheight: 3px;
 				flex-grow: 1;
-				background-color: #800;
-				
+				background-color: #e00;
 			}
 		</style>
 	</body>
