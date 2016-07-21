@@ -125,10 +125,8 @@
 
             var expandComponent = document.querySelector('.expand-component');
             var duration = 2500,
-                // TODO: get actual height from element
-                collapsedHeight = '80px', // Save original height
-                // TODO: make this an height relative to actual height
-                expandHeight = 300 + 'px',
+                collapsedHeight = parseInt(getComputedStyle(expandComponent).height, 10), // Save original height
+                expandHeightBy = 300,
                 expandEasing = 'linear',
                 collapseEasing = 'linear';
 
@@ -140,9 +138,9 @@
 
                 // Play the animation with the newly specified duration
                 var expandAnimation = expandComponent.animate([
-                    {height: collapsedHeight},
-                    {height: expandHeight, easing: expandEasing},
-                    {height: collapsedHeight, easing: collapseEasing}
+                    {height: collapsedHeight + 'px'},
+                    {height: (collapsedHeight + expandHeightBy) + 'px', easing: expandEasing},
+                    {height: collapsedHeight + 'px', easing: collapseEasing}
                     ], duration);
             };
 
