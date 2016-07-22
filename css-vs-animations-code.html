@@ -8,29 +8,96 @@
     .example {
         border: 1px solid #000;
         padding: 1em;
+        margin: 1em auto;
     }
     .example h1:first-child {
         margin-top: 0;
     }
 
-    .css-btn-transform {
+    .css-btn-events {
         transform: scale(1);
         transition: all 0.5s;
     }
-    .css-btn-transform:hover {
+    .css-btn-events:hover {
         transform: scale(1.20);
+    }
+
+    .rainbow, .anim-rainbow {
+        background: #ff004d;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .rainbow {
+        animation: rainbow 2s alternate infinite;
+    }
+
+    @keyframes rainbow {
+        0% { background: #ff004d; }
+        25% { background: #ff77ab; }
+        50% { background: #00e756; }
+        75% { background: #29adff; }
+        100% { background: #ff77ab;}
     }
     </style>
 </head>
 <body>
     <main>
         <article class="example">
+            <header><h1>Looped color animation</h1></header>
+            <section class="css">
+                <h1>CSS</h1>
+                <section class="demo">
+                    <button type="button" class="rainbow">Hi</button>
+                </section>
+                <section class="source">
+<pre><code class="lang-css">.rainbow {
+    animation: rainbow 2s alternate infinite;
+}
+
+@keyframes rainbow {
+    0% { background: #ff004d; }
+    25% { background: #ff77ab; }
+    50% { background: #00e756; }
+    75% { background: #29adff; }
+    100% { background: #ff77ab;}
+}
+</code></pre>
+                </section>
+            </section><!-- css -->
+            <section class="animations">
+                <h1>Web Animations API</h1>
+                <section class="demo">
+                    <button type="button" class="anim-rainbow">Hi</button>
+                </section>
+                <section class="source">
+<pre><code class="lang-css">
+let el = document.querySelector('.rainbow');
+el.animate([
+    { background: '#ff004d', offset: 0 },
+    { background: '#ff77ab', offset: 0.25 },
+    { background: '#00e756', offset: 0.5 },
+    { background: '#29adff', offset: 0.75 },
+    { background: '#ff77ab', offset: 1 }
+], {
+    duration: 2000,
+    direction: 'alternate',
+    iterations: Infinity
+});
+</code></pre>
+                </section>
+            </section><!-- animations -->
+        </article><!-- looped animation -->
+
+        <article class="example">
             <header><h1>Linear transform with user events</h1></header>
             <section class="css">
                 <h1>CSS</h1>
                 <section class="demo">
                     <p>
-                        <button class="css-btn-transform" type="button">Waka</button>
+                        <button class="css-btn-events" type="button">Waka</button>
                         Mouse over the button
                     </p>
                 </section>
@@ -49,7 +116,7 @@ button:hover {
                 <h1>Web Animations API</h1>
                 <section class="demo">
                     <p>
-                        <button class="anim-btn-transform" type="button">Waka</button>
+                        <button class="anim-btn-events" type="button">Waka</button>
                         Mouse over the button
                     </p>
                 </section>
@@ -74,8 +141,8 @@ el.addEventListener('mouseout', function () {
     </main>
 
 <script>
-function setupEasedTransform() {
-    let el = document.querySelector('.anim-btn-transform');
+function setupUserEventsTransform() {
+    let el = document.querySelector('.anim-btn-events');
     el.addEventListener('mouseover', function () {
         let anim = el.animate({
             transform: ['scale(1)', 'scale(1.25)']
@@ -90,8 +157,24 @@ function setupEasedTransform() {
     });
 }
 
+function setupLoopedColor() {
+    let el = document.querySelector('.anim-rainbow');
+    el.animate([
+        { background: '#ff004d', offset: 0 },
+        { background: '#ff77ab', offset: 0.25 },
+        { background: '#00e756', offset: 0.5 },
+        { background: '#29adff', offset: 0.75 },
+        { background: '#ff77ab', offset: 1 }
+    ], {
+        duration: 2000,
+        direction: 'alternate',
+        iterations: Infinity
+    });
+}
+
 window.onload = function () {
-    setupEasedTransform();
+    setupUserEventsTransform();
+    setupLoopedColor();
 }
 </script>
 </body>
