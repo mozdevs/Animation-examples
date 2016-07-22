@@ -1,0 +1,97 @@
+<!doctype html>
+<head>
+    <title>Web Animations Example - CSS vs Web Animations code comparison</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+    .example {
+        border: 1px solid #000;
+        padding: 1em;
+    }
+    .example h1:first-child {
+        margin-top: 0;
+    }
+
+    .css-btn-transform {
+        transform: scale(1);
+        transition: all 0.5s;
+    }
+    .css-btn-transform:hover {
+        transform: scale(1.20);
+    }
+    </style>
+</head>
+<body>
+    <main>
+        <article class="example">
+            <header><h1>Linear transform with user events</h1></header>
+            <section class="css">
+                <h1>CSS</h1>
+                <section class="demo">
+                    <p>
+                        <button class="css-btn-transform" type="button">Waka</button>
+                        Mouse over the button
+                    </p>
+                </section>
+                <section class="source">
+<pre><code class="lang-css">button {
+    transform: scale(1);
+    transition: all 0.5s;
+}
+
+button:hover {
+    transform: scale(1.25);
+}
+</pre></code>
+            </section><!-- css -->
+            <section class="animations">
+                <h1>Web Animations API</h1>
+                <section class="demo">
+                    <p>
+                        <button class="anim-btn-transform" type="button">Waka</button>
+                        Mouse over the button
+                    </p>
+                </section>
+                <section class="source">
+<pre><code class="lang-javascript">let el = document.querySelector('.animated');
+el.addEventListener('mouseover', function () {
+    let anim = el.animate({
+        transform: ['scale(1)', 'scale(1.25)']
+    }, 300);
+    el.style.transform = 'scale(1.25)';
+});
+el.addEventListener('mouseout', function () {
+    let anim = el.animate({
+        transform: ['scale(1.25)', 'scale(1)']
+    }, 300);
+    el.style.transform = '';
+});
+</pre></code>
+                </section>
+            </section><!-- animations -->
+        </article>
+    </main>
+
+<script>
+function setupEasedTransform() {
+    let el = document.querySelector('.anim-btn-transform');
+    el.addEventListener('mouseover', function () {
+        let anim = el.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        el.style.transform = 'scale(1.25)';
+    });
+    el.addEventListener('mouseout', function () {
+        let anim = el.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        el.style.transform = '';
+    });
+}
+
+window.onload = function () {
+    setupEasedTransform();
+}
+</script>
+</body>
