@@ -18,6 +18,7 @@
 				var elementsContainer = document.getElementById('elements');
 				var jsAnimsBtn = document.getElementById('jsanims');
 				var webAnimsBtn = document.getElementById('webanims');
+				var webAnimationsSupport = (document.body.getAnimations !== undefined);
 				var objs = [];
 				var rafId;
 				var tweenLength = 1500;
@@ -33,7 +34,15 @@
 				}
 
 				jsAnimsBtn.addEventListener('click', startJSAnimations);
-				webAnimsBtn.addEventListener('click', startWebAnimations);
+
+				if(webAnimationsSupport) {
+					webAnimsBtn.addEventListener('click', startWebAnimations);
+				} else {
+					webAnimsBtn.disabled = true;
+					alert('Your browser does not support Web Animations yet.\nOnly the JavaScript example will be enabled.');
+				}
+
+				
 
 				startJSAnimations();
 
@@ -52,12 +61,14 @@
 					TWEEN.getAll().forEach((t) => t.stop());
 					TWEEN.removeAll();
 
-					objs.forEach((obj) => {
-						obj.el.getAnimations()
-							.forEach((anim) => {
-								anim.cancel();
-							});
-					});
+					if(webAnimationsSupport) {
+						objs.forEach((obj) => {
+							obj.el.getAnimations()
+								.forEach((anim) => {
+									anim.cancel();
+								});
+						});
+					}
 				}
 
 				function startJSAnimations() {
