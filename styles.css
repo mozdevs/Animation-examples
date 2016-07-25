@@ -2,6 +2,7 @@ body {
   font-family: Courier, 'Courier New', monospace;
   padding: 1em 2em;
   font-size: 1rem;
+  background: #eee;
 }
 
 code, pre, button {
@@ -57,4 +58,21 @@ li {
 
 input[type=range], input[type=color] {
     vertical-align: bottom;
+}
+
+/* custom tabzilla */
+#tabzilla a {
+    box-shadow: none;
+}
+
+#tabzilla a:hover {
+    background-color: transparent;
+}
+
+#tabzilla:hover:before{
+    background-color: #31ffd5;
+}
+
+#tabzilla:before {
+    background: #000;
 }
