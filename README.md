@@ -1,12 +1,16 @@
-#Web Animations API Examples
-The Web Animations API allows creation and control of CSS animations through Javascript.  This repos is a collection of examples demonstrating some use-cases of the API.
+# Web Animations API Examples
 
-###[View demos](https://mozdevs.github.io/Animation-examples/)
+This is a collection of [Web Animations](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API) demos. This API allows creation and control of animations through JavaScript.
 
-or alternately, git clone and open index.html to browse examples locally.
+- [View demos online](https://mozdevs.github.io/Animation-examples/)
+- or [download](https://github.com/mozdevs/Animation-examples/archive/gh-pages.zip) this repository and open `index.html` to browse examples locally.
 
-##Contribute
-All contributions welcome.  If you have an example showing off a particular feature of the API, create a branch for it and submit a PR.<br />
-For bugs and general discussion, use the issue tracker.
+## Requirements
 
+For the demos to work, you need a browser that supports the Web Animations API. In Firefox, it is available from **version 48**. For other browsers, check out this [support table](http://caniuse.com/#feat=web-animation).
 
+## Contribute
+
+If you would like to submit additional demos featuring more use cases, please create a pull request.
+
+For bugs and general discussion, use the [issue tracker](https://github.com/mozdevs/Animation-examples/issues).
