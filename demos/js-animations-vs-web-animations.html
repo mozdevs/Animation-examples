@@ -3,7 +3,7 @@
 	<head>
 		<title>JS Animations vs Web Animations</title>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="styles.css" type="text/css">
+		<link rel="stylesheet" href="../styles.css" type="text/css">
 		<script src="lib/Tween.js"></script>
 	</head>
 	<body>
@@ -22,7 +22,7 @@
 				var objs = [];
 				var rafId;
 				var tweenLength = 1500;
-				
+
 				for(var i = 0; i < numElements; i++) {
 					var el = document.createElement('div');
 					elementsContainer.appendChild(el);
@@ -42,7 +42,7 @@
 					alert('Your browser does not support Web Animations yet.\nOnly the JavaScript example will be enabled.');
 				}
 
-				
+
 
 				startJSAnimations();
 
@@ -95,13 +95,13 @@
 							.start();
 
 					});
-					
+
 					rafId = requestAnimationFrame(render);
 
 				}
 
 				function render(timestamp) {
-					
+
 					if(rafId) {
 						requestAnimationFrame(render);
 						TWEEN.update(timestamp);
@@ -132,7 +132,7 @@
 			body {
 				overflow: hidden;
 			}
-			
+
 			h1 {
 				z-index: 1000;
 				position: relative;
