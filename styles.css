@@ -5,7 +5,7 @@ body {
   font-size: 14px;
   padding: 1em;
   margin: 0;
-  line-height: 1.25em;
+  line-height: 1.3em;
   background-color: #f6f4ec;
 }
 
@@ -68,8 +68,12 @@ p, li {
   margin: 1em 0;
 }
 
-li {
+li, dt, dd {
     margin: 0.8em 0;
+}
+
+dd {
+    margin-left: 2em;
 }
 
 input[type=range], input[type=color] {
@@ -136,6 +140,9 @@ body.index {
 /* ---------------------------------------------------------------------------*/
 /* main menu */
 /* ---------------------------------------------------------------------------*/
+p.tagline {
+    margin-top: -1em;
+}
 .menu {
     text-align: left;
     background: #f6f4ec;
