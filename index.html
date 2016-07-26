@@ -6,20 +6,24 @@
     <link rel="stylesheet" href="tabzilla.css" type="text/css">
     <link rel="stylesheet" href="styles.css" type="text/css">
 </head>
-<body>
-    <aside id="tabzilla"><a href="https://www.mozilla.org/">Mozilla</a></aside>
-    <header>
-        <h1><a href="index.html">Web Animations examples</a></h1>
-    </header>
-    <main>
-        <p>Here's a collection of examples using the
-            <a href="https://developer.mozilla.org/en/docs/Web/API/Animation">Web Animations API</a>.</p>
-        <nav><ul>
-            <li><a href="demos/style-guide.html">Style guide</a></li>
-            <li><a href="demos/accessibility.html">Adjustable accessibility settings</a></li>
-            <li><a href="demos/js-animations-vs-web-animations.html">Comparing performance of JavaScript animations (via requestAnimationFrame) and web Animations</a></li>
-            <li><a href="demos/css-vs-animations-code.html">Comparing source code of CSS-defined animations vs Web Animations API</a></li>
-        </ul></nav>
-    </main>
+<body class="index">
+    <div class="page-wrapper">
+        <aside class="sidebar">
+            <aside id="tabzilla"><a href="https://www.mozilla.org/">Mozilla</a></aside>
+            <h1>Web Animations</h1>
+            <nav class="menu"><ul>
+                <li><a target="viewer" href="demos/style-guide.html">Style guide</a></li>
+                <li><a target="viewer" href="demos/accessibility.html">Adjustable accessibility settings</a></li>
+                <li><a target="viewer" href="demos/js-animations-vs-web-animations.html">Performance of JS animations (via <code>requestAnimationFrame</code>) and Web Animations</a></li>
+                <li><a target="viewer" href="demos/css-vs-animations-code.html">Code of CSS animations vs Web Animations API</a></li>
+            </ul></nav>
+            <p><a class="button" download href="https://github.com/mozdevs/Animation-examples/archive/gh-pages.zip">Download these demos</a></p>
+            <p><a href="https://github.com/mozdevs/Animation-examples">
+                <img src="images/github.png" width="32" height="32"><br>Fork this on Github!</a></p>
+        </aside>
+        <main class="viewer-wrapper">
+            <iframe class="viewer" src="demos/style-guide.html" allowfullscreen name="viewer"></iframe>
+        </main>
+    </div><!-- page wrapper -->
 </body>
 </html>
