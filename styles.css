@@ -4,12 +4,14 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   padding: 1em;
+  margin: 0;
   line-height: 1.25em;
   background-color: #f6f4ec;
 }
 
 body, html {
     height: 100%;
+    box-sizing: border-box;
 }
 
 code, pre {
