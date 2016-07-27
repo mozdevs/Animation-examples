@@ -1,16 +1,31 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
 
+:root {
+    --contrast-color: #0095DD;
+    --contrast-color-over: #00539F;
+
+    --bg-color: #f6f4ec;
+    --bg-color-shadow: #d7d3c8;
+
+    --text-color: #000;
+    --text-color-contrast: #fff;
+
+    --highlight: rgba(255, 255, 255, 0.9);
+    --highlight-subtle: rgba(255, 255, 255, 0.5);
+    --shadow: rgba(0, 0, 0, 0.2);
+}
+
 body {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  padding: 1em;
-  margin: 0;
-  line-height: 1.3em;
-  background-color: #f6f4ec;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    padding: 1em;
+    margin: 0;
+    line-height: 1.3em;
+    background: linear-gradient(to top, var(--bg-color-shadow) 0%, var(--bg-color) 100%) center center repeat;
 }
 
 body, html {
-    height: 100%;
+    min-height: 100%;
     box-sizing: border-box;
 }
 
@@ -23,20 +38,19 @@ code {
   color: #666;
 }
 
-
 a {
-    color: #0095DD;
+    color: var(--contrast-color);
     text-decoration: none;
 }
 
 a:hover {
-    color: #00539F;
+    color: var(--contrast-color-over);
     text-decoration: underline;
 }
 
 a.button {
     display: inline-block;
-    color: #fff;
+    color: var(--text-color-contrast);
     text-decoration: none;
     line-height: 1.25rem;
     box-sizing: border-box;
@@ -44,14 +58,14 @@ a.button {
 
 button, a.button {
     border: 0;
-    background: #0095DD;
+    background: var(--contrast-color);
     font-size: 1rem;
     padding: 0.5rem 1rem;
     color: #fff;
 }
 
 button:active, button:hover, a.button:active, a.button:hover {
-    background: #00539F;
+    background: var(--contrast-color-over);
 }
 
 button[disabled] {
@@ -82,7 +96,7 @@ input[type=range], input[type=color] {
 
 h1, h2, h3 {
     font-weight: normal;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.75);
+    text-shadow: 0 1px 0 var(--highlight);
     color: #484848;
 }
 
@@ -105,7 +119,6 @@ body.index {
     margin: 0;
     min-height: 100vh;
     overflow: auto;
-    background: linear-gradient(to top, #d7d3c8 0%,#f6f4ec 100%) center center no-repeat;
 }
 
 .page-wrapper {
@@ -116,7 +129,7 @@ body.index {
 
 .sidebar {
     flex: 0 0 auto;
-    border-right: 4px solid rgba(0, 0, 0, 0.2);
+    border-right: 4px solid var(--shadow);
     width: 280px;
     box-sizing: border-box;
     padding: 0em 1em 1em 1em;
@@ -145,7 +158,7 @@ p.tagline {
 }
 .menu {
     text-align: left;
-    background: #f6f4ec;
+    background: var(--bg-color);
 }
 
 .menu ul {
@@ -154,8 +167,8 @@ p.tagline {
 .menu li {
     display: block;
     line-height: 1.4em;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-    border-top: 2px solid rgba(255, 255, 255, 0.9);
+    border-bottom: 2px solid var(--shadow);
+    border-top: 2px solid var(--highlight);
     margin: 0;
 }
 
@@ -166,7 +179,7 @@ p.tagline {
 
 .menu a:hover {
     text-decoration: none;
-    background: rgba(255, 255, 255, 0.5);
+    background: var(--highlight-subtle);
 }
 
 .sidebar .button {
@@ -178,9 +191,6 @@ p.tagline {
 /* ---------------------------------------------------------------------------*/
 
 #tabzilla {
-    /*position: absolute;
-    top: 0;
-    right: 0;*/
     float: none;
 }
 

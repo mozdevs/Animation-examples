@@ -6,12 +6,13 @@
     <link rel="stylesheet" href="../styles.css" type="text/css">
     <style>
         .btn-component:active, .btn-component:hover {
-            background: #31ffd5;
-            color: #000;
+            background: var(--contrast-color-over);
+            color: var(--text-color-contrast);
         }
 
         .fade-component, .expand-component {
-            border: 1px solid black;
+            border: 1px solid var(--shadow);
+            background: var(--highlight-subtle);
             padding: 0.5em;
             font-size: 0.8em;
         }
@@ -22,9 +23,12 @@
         }
 
         .controls {
-            border: 1px solid #000;
+            border-bottom: 2px solid var(--shadow);
+            border-right: 2px solid var(--shadow);
+            border-top: 2px solid var(--highlight);
             margin: 2em;
             padding: 1em;
+            background: var(--bg-color);
         }
 
         .controls > *:first-child {
@@ -49,8 +53,8 @@
 
             // btn animation config vars
             var duration = 1000;
-            var fromColor = '#31ffd5',
-            toColor = '#000';
+            var fromColor = '#0095DD',
+            toColor = '#00539F';
 
             btn.style.backgroundColor = fromColor;
 
@@ -182,8 +186,10 @@
     </script>
 </head>
 <body>
+    <h1>Style guide</h1>
+    <p>Tweak each UX component and ajust its animations.</p>
     <article class="controls expand-controls">
-        <h1>Expand Element Config</h1>
+        <h2>Expand Element Config</h2>
         <p>Use to expand an element in order to reveal more content to the user.</p>
 
         <form>
@@ -218,13 +224,13 @@
         </form>
 
         <section class="expand-component">
-            <h1>Here is lots of content which can be expanded</h1>
+            <h3>Here is lots of content which can be expanded</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur finibus nisi at massa accumsan, et aliquet lacus consequat. Proin ultricies leo augue, dignissim placerat ipsum imperdiet sit amet. Nullam iaculis neque ac eros dapibus, vitae pellentesque eros faucibus. Curabitur dignissim lobortis tortor, in viverra nisi congue sit amet.</p>
         </section>
     </article><!-- expand controls -->
 
     <article class="controls btn-controls">
-        <h1>Button Suggest Action Config</h1>
+        <h2>Button Suggest Action Config</h2>
         <p>Use to suggest a button action to the user by drawing attention to it.</p>
 
         <p><button class="btn-component" type="button">Action</button>
@@ -239,11 +245,11 @@
     </article>
 
     <article class="controls fade-controls">
-        <h1>Element Fade In Config</h1>
+        <h2>Element Fade In Config</h2>
         <p>Use to introduce a dynamically loaded piece of content to the user.</p>
 
         <section class="fade-component">
-            <h1>Dynamically Fetched Content</h1>
+            <h3>Dynamically Fetched Content</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia sed sapien vehicula vestibulum.</p>
         </section>
 
