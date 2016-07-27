@@ -150,6 +150,26 @@ body.index {
     width: 100%;
 }
 
+/* helpers */
+.panel {
+    border-bottom: 2px solid var(--shadow);
+    border-right: 2px solid var(--shadow);
+    border-top: 2px solid var(--highlight);
+    margin: 2em 0;
+    padding: 1.5em;
+    background: var(--bg-color);
+}
+
+.panel > *:first-child, .panel > header > * {
+    margin-top: 0;
+}
+
+main.constrained {
+    max-width: 900px;
+    margin: 0 2em;
+}
+
+
 /* ---------------------------------------------------------------------------*/
 /* main menu */
 /* ---------------------------------------------------------------------------*/
@@ -211,4 +231,12 @@ p.tagline {
     background: #4D4E53;
     left: 50%;
     margin-left: -44px;
+}
+
+/* ---------------------------------------------------------------------------*/
+/* custom syntax highlight */
+/* ---------------------------------------------------------------------------*/
+pre[class*="language-"] {
+    background: var(--highlight-subtle);
+    margin: 1em 0;
 }
