@@ -3,15 +3,16 @@
 <head>
     <title>Web Animations examples</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="styles.css" type="text/css">
+    <link rel="stylesheet" href="../styles.css" type="text/css">
     <style>
         .btn-component:active, .btn-component:hover {
-            background: #31ffd5;
-            color: #000;
+            background: var(--contrast-color-over);
+            color: var(--text-color-contrast);
         }
 
         .fade-component, .expand-component {
-            border: 1px solid black;
+            border: 1px solid var(--shadow);
+            background: var(--highlight-subtle);
             padding: 0.5em;
             font-size: 0.8em;
         }
@@ -19,16 +20,6 @@
         .expand-component {
             height: 80px;
             overflow-y: scroll;
-        }
-
-        .controls {
-            border: 1px solid #000;
-            margin: 2em;
-            padding: 1em;
-        }
-
-        .controls > *:first-child {
-            margin-top: 0;
         }
 
         label {
@@ -49,8 +40,8 @@
 
             // btn animation config vars
             var duration = 1000;
-            var fromColor = '#31ffd5',
-            toColor = '#000';
+            var fromColor = '#0095DD',
+            toColor = '#00539F';
 
             btn.style.backgroundColor = fromColor;
 
@@ -182,77 +173,81 @@
     </script>
 </head>
 <body>
-    <article class="controls expand-controls">
-        <h1>Expand Element Config</h1>
-        <p>Use to expand an element in order to reveal more content to the user.</p>
+    <main class="constrained">
+        <h1>Style guide</h1>
+        <p>Tweak each UX component and ajust its animations.</p>
+        <article class="panel expand-controls">
+            <h2>Expand Element Config</h2>
+            <p>Use to expand an element in order to reveal more content to the user.</p>
 
-        <form>
-            <p>
-                <input id="expand-duration-slider" class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5">
-                <label class="duration-text" for="expand-duration-slider">
-                    One-way duration: 2.5s </label>
-            </p>
+            <form>
+                <p>
+                    <input id="expand-duration-slider" class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5">
+                    <label class="duration-text" for="expand-duration-slider">
+                        One-way duration: 2.5s </label>
+                </p>
 
-            <p>
-                <input id="expand-height-slider" class="height-slider" type="range" min="0" max="500" step="10" value="350" />
-                <label class="height-text" for="expand-height-slider">
-                    Expand height By: 350px</label>
-            </p>
+                <p>
+                    <input id="expand-height-slider" class="height-slider" type="range" min="0" max="500" step="10" value="350" />
+                    <label class="height-text" for="expand-height-slider">
+                        Expand height By: 350px</label>
+                </p>
 
-            <p><label>Expand Easing:
-                <select class="expand-easing">
-                    <option value="linear">Linear</option>
-                    <option value="ease-in">Ease In</option>
-                    <option value="ease-out">Ease Out</option>
-                    <option value="ease-in-out">Ease In Out</option>
-                </select>
-            </label></p>
-            <p><label>Collapse Easing:
-                <select class="collapse-easing">
-                    <option value="linear">Linear</option>
-                    <option value="ease-in">Ease In</option>
-                    <option value="ease-out">Ease Out</option>
-                    <option value="ease-in-out">Ease In Out</option>
-                </select>
-            </label></p>
-        </form>
+                <p><label>Expand Easing:
+                    <select class="expand-easing">
+                        <option value="linear">Linear</option>
+                        <option value="ease-in">Ease In</option>
+                        <option value="ease-out">Ease Out</option>
+                        <option value="ease-in-out">Ease In Out</option>
+                    </select>
+                </label></p>
+                <p><label>Collapse Easing:
+                    <select class="collapse-easing">
+                        <option value="linear">Linear</option>
+                        <option value="ease-in">Ease In</option>
+                        <option value="ease-out">Ease Out</option>
+                        <option value="ease-in-out">Ease In Out</option>
+                    </select>
+                </label></p>
+            </form>
 
-        <section class="expand-component">
-            <h1>Here is lots of content which can be expanded</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur finibus nisi at massa accumsan, et aliquet lacus consequat. Proin ultricies leo augue, dignissim placerat ipsum imperdiet sit amet. Nullam iaculis neque ac eros dapibus, vitae pellentesque eros faucibus. Curabitur dignissim lobortis tortor, in viverra nisi congue sit amet.</p>
-        </section>
-    </article><!-- expand controls -->
+            <section class="expand-component">
+                <h3>Here is lots of content which can be expanded</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur finibus nisi at massa accumsan, et aliquet lacus consequat. Proin ultricies leo augue, dignissim placerat ipsum imperdiet sit amet. Nullam iaculis neque ac eros dapibus, vitae pellentesque eros faucibus. Curabitur dignissim lobortis tortor, in viverra nisi congue sit amet.</p>
+            </section>
+        </article><!-- expand controls -->
 
-    <article class="controls btn-controls">
-        <h1>Button Suggest Action Config</h1>
-        <p>Use to suggest a button action to the user by drawing attention to it.</p>
+        <article class="panel btn-controls">
+            <h2>Button Suggest Action Config</h2>
+            <p>Use to suggest a button action to the user by drawing attention to it.</p>
 
-        <p><button class="btn-component" type="button">Action</button>
+            <p><button class="btn-component" type="button">Action</button>
 
-        <form>
-            <p><label>Suggest Colour:
-                <input type="color" id="btnToColor"></label></p>
-            <p>
-                <input id="button-duration-slider" class="duration-slider" type="range" min="0.05" max="2" step="0.05" value="1">
-                <label for="button-duration-slider" class="duration-text">Duration: 1s</label></p>
-        </form>
-    </article>
+            <form>
+                <p><label>Suggest Colour:
+                    <input type="color" id="btnToColor"></label></p>
+                <p>
+                    <input id="button-duration-slider" class="duration-slider" type="range" min="0.05" max="2" step="0.05" value="1">
+                    <label for="button-duration-slider" class="duration-text">Duration: 1s</label></p>
+            </form>
+        </article>
 
-    <article class="controls fade-controls">
-        <h1>Element Fade In Config</h1>
-        <p>Use to introduce a dynamically loaded piece of content to the user.</p>
+        <article class="panel fade-controls">
+            <h2>Element Fade In Config</h2>
+            <p>Use to introduce a dynamically loaded piece of content to the user.</p>
 
-        <section class="fade-component">
-            <h1>Dynamically Fetched Content</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia sed sapien vehicula vestibulum.</p>
-        </section>
+            <section class="fade-component">
+                <h3>Dynamically Fetched Content</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia sed sapien vehicula vestibulum.</p>
+            </section>
 
-        <form>
-            <p>
-                <input id="fade-duration-slider" class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5">
-                <label for="fade-duration-slider" class="duration-text">Duration: 2.5s</label>
-            </p>
-        </form>
-    </article>
+            <form>
+                <p>
+                    <input id="fade-duration-slider" class="duration-slider" type="range" min="0.05" max="5" step="0.05" value="2.5">
+                    <label for="fade-duration-slider" class="duration-text">Duration: 2.5s</label>
+                </p>
+            </form>
+        </article>
+    </main>
 </body>
 </html>

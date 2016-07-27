@@ -3,11 +3,11 @@
 	<head>
 		<title>JS Animations vs Web Animations</title>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="styles.css" type="text/css">
+		<link rel="stylesheet" href="../styles.css" type="text/css">
 		<script src="lib/Tween.js"></script>
 	</head>
 	<body>
-		<h1><input type="button" value="JavaScript Animations" id="jsanims" /> vs <input type="button" value="Web Animations" id="webanims" /></h1>
+		<h1><button type="button" id="jsanims">JavaScript Animations</button> vs <button type="button" id="webanims">Web Animations</button></h1>
 		<main>
 			<div id="elements">
 			</div>
@@ -22,7 +22,7 @@
 				var objs = [];
 				var rafId;
 				var tweenLength = 1500;
-				
+
 				for(var i = 0; i < numElements; i++) {
 					var el = document.createElement('div');
 					elementsContainer.appendChild(el);
@@ -42,7 +42,7 @@
 					alert('Your browser does not support Web Animations yet.\nOnly the JavaScript example will be enabled.');
 				}
 
-				
+
 
 				startJSAnimations();
 
@@ -72,6 +72,7 @@
 				}
 
 				function startJSAnimations() {
+					console.log('starting js animations');
 					stopAnimations();
 
 					jsAnimsBtn.classList.add('selected');
@@ -95,13 +96,13 @@
 							.start();
 
 					});
-					
+
 					rafId = requestAnimationFrame(render);
 
 				}
 
 				function render(timestamp) {
-					
+
 					if(rafId) {
 						requestAnimationFrame(render);
 						TWEEN.update(timestamp);
@@ -109,6 +110,7 @@
 				}
 
 				function startWebAnimations() {
+					console.log('start web animations');
 					stopAnimations();
 
 					jsAnimsBtn.classList.remove('selected');
@@ -132,24 +134,20 @@
 			body {
 				overflow: hidden;
 			}
-			
+
 			h1 {
 				z-index: 1000;
 				position: relative;
+				background: var(--dark-shadow);
+				padding: 1em;
+				display: inline-block;
+				text-shadow: none;
+				color: var(--text-color-contrast);
 			}
 
-			input {
-				font-size: inherit;
-				opacity: 0.75;
-				transition: all 0.2s ease-in;
-				border-width: 0px;
-				box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
-			}
-
-			.selected {
-				border-bottom: 3px solid red;
-				opacity: 1.0;
-				background: #fff;
+			button.selected {
+				background: var(--contrast-color-over);
+				border-bottom: 4px solid var(--highlight);
 			}
 
 			main {
@@ -173,7 +171,7 @@
 			#elements > div {
 				width: 50%;
 				flex-grow: 1;
-				background-color: #e00;
+				background-color: #0095DD;
 			}
 		</style>
 	</body>
