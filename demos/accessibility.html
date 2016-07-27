@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="../styles.css" type="text/css">
 
     <style>
+    .panel {
+        text-align: center;
+    }
     .avatar-selector li {
         list-style-type: none;
         display: inline-block;
@@ -14,7 +17,7 @@
         font-size: 0;
     }
     .avatar {
-        background: #ccc;
+        background: var(--contrast-color);
         font-size: 1.2rem;
         display: inline-block;
         border-radius: 100%;
@@ -23,32 +26,25 @@
         height: 50px;
         margin: 0 0.5em;
         padding: 0;
+        color: var(--text-color-contrast);
     }
 
-    .avatar.selected {
-        background: #31ffd5;
-        color: #000;
+    .avatar.selected, .avatar:hover {
+        background: var(--contrast-color-over);
+        color: var(--text-color-contrast);
     }
 
     .avatar:hover {
-        background: #000;
-        color: #fff;
         cursor: pointer;
     }
     .avatar:disabled{
         cursor: not-allowed;
     }
 
-    main {
-        width: 300px;
-        margin: 0 auto;
-        text-align: center;
-    }
-
     .contact {
-        background: #efefef;
+        background: var(--bg-color-shadow);
         box-sizing: border-box;
-        border-top: 8px solid #ccc;
+        border-top: 8px solid var(--shadow);
 
         position: absolute;
         width: 100%;
@@ -59,6 +55,7 @@
         align-items: center;
         justify-content: center;
         top: 100%;
+        font-size: 2em;
     }
 
     .contact.active {
@@ -86,36 +83,38 @@
     </style>
 </head>
 <body>
-    <main>
-        <section class="contact-display">
-            <section class="contact active" data-contact="js">Jon Snow</section>
-            <section class="contact" data-contact="dt">Daenerys Targaryen</section>
-            <section class="contact" data-contact="tl">Tyrion Lannister</section>
-        </section>
-        <nav class="avatar-selector"><ul>
-            <li><button class="avatar selected" disabled data-contact="js">JS</button></li>
-            <li><button class="avatar" data-contact="dt">DT</button></li>
-            <li><button class="avatar" data-contact="tl">TL</button></li>
-        </ul></nav>
-        <aside class="settings">
-            <h1>Accessibility options</h1>
-            <form>
-                <p><label><input type="checkbox" checked id="settings-flash">Flash animations</label></p>
-                <p><label>Size variation <input type="range" min="100" max="300" value="125" id="settings-size"></label></p>
-                <p><label>Slow movement<input type="range" min="10" max="100" value="40" id="settings-speed"></label></p>
-            </form>
-        </aside>
+    <main class="constrained">
+        <h1>Accessibility settings demo</h1>
+        <article class="panel">
+            <section class="contact-display">
+                <section class="contact active" data-contact="js">Jon Snow</section>
+                <section class="contact" data-contact="dt">Daenerys Targaryen</section>
+                <section class="contact" data-contact="tl">Tyrion Lannister</section>
+            </section>
+            <nav class="avatar-selector"><ul>
+                <li><button class="avatar selected" disabled data-contact="js">JS</button></li>
+                <li><button class="avatar" data-contact="dt">DT</button></li>
+                <li><button class="avatar" data-contact="tl">TL</button></li>
+            </ul></nav>
+            <aside class="settings">
+                <h2>Accessibility options</h2>
+                <form>
+                    <p><label><input type="checkbox" checked id="settings-flash">Flash animations</label></p>
+                    <p><label>Size variation <input type="range" min="100" max="300" value="125" id="settings-size"></label></p>
+                    <p><label>Slow movement<input type="range" min="10" max="100" value="40" id="settings-speed"></label></p>
+                </form>
+            </aside>
+        </article>
     </main>
 
 <script>
 
 // TODO: add TONS of comments to all of this
-
 var settingsFlashEl, settingsSizeEl, settingsSpeedEl;
 
 function scrollToContact(contactId) {
     let oldActive = document.querySelector('.contact.active');
-    oldActive.style['z-index'] = parseInt(oldActive.style['z-index'] - 1);
+    oldActive.style['z-index'] = 9;
 
     let contact = document.querySelector(`.contact[data-contact=${contactId}]`);
     contact.classList.add('active');
@@ -132,11 +131,11 @@ function scrollToContact(contactId) {
 function flashAvatarButton(element) {
     if (settingsFlashEl.checked) { // only play if setting is enabled
         element.animate([
-            { background: '#000' },
-            { background: '#31ffd5'},
-            { background: '#000'},
-            { background: '#31ffd5'},
-            { background: '#000'}
+            { background: '#00539F' },
+            { background: '#0095DD'},
+            { background: '#00539F'},
+            { background: '#0095DD'},
+            { background: '#00539F'}
         ], 500);
     }
 }

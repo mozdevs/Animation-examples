@@ -13,6 +13,7 @@
     --highlight: rgba(255, 255, 255, 0.9);
     --highlight-subtle: rgba(255, 255, 255, 0.5);
     --shadow: rgba(0, 0, 0, 0.2);
+    --dark-shadow: rgba(0, 0, 0, 0.6);
 }
 
 body {
@@ -62,6 +63,7 @@ button, a.button {
     font-size: 1rem;
     padding: 0.5rem 1rem;
     color: #fff;
+    transition: background 0.2s ease;
 }
 
 button:active, button:hover, a.button:active, a.button:hover {
@@ -139,7 +141,6 @@ body.index {
 .viewer-wrapper {
     flex: 1 1 auto;
     overflow: hidden;
-    background: red;
 }
 
 .viewer {
