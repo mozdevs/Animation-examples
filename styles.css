@@ -170,6 +170,36 @@ main.constrained {
     margin: 0 2em;
 }
 
+.burger {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    /*display: none;*/
+    z-index: 10;
+}
+
+.burger button {
+    padding: 0.2em;
+}
+
+@media (max-width: 900px) {
+    body {
+        padding-top: 2em;
+    }
+    .page-wrapper {
+        display: block;
+        min-height: 0;
+    }
+    .sidebar {
+        width: 100%;
+        border: none;
+    }
+    .viewer-wrapper {
+        display: none;
+        height: 100vh;
+    }
+}
 
 /* ---------------------------------------------------------------------------*/
 /* main menu */
