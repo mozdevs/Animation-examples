@@ -173,7 +173,7 @@ main.constrained {
 }
 
 .burger {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: none;
@@ -182,14 +182,37 @@ main.constrained {
 
 .burger button {
     padding: 0.2em;
+}
+
+.burger button, .view-source a {
     background: var(--contrast-color-translucid);
 }
 
-.burger button:hover {
+.burger button:hover, .view-source a:hover {
     background: var(--contrast-color-over-translucid);
 }
 
+.view-source {
+    position: fixed;
+    top: 0.5em;
+    right: 0.5em;
+    z-index: 10;
+    display: none;
+}
+
 @media (max-width: 900px) {
+    .mobile-hidden {
+        display: none;
+    }
+
+    .mobile-show {
+        display: block;
+    }
+
+    .burger {
+        display: block;
+    }
+
     body {
         padding-top: 2em;
     }
@@ -202,8 +225,10 @@ main.constrained {
         border: none;
     }
     .viewer-wrapper {
-        display: none;
         height: 100vh;
+    }
+    .viewer-wrapper:not(.mobile-show) {
+        display: none;
     }
 }
 
