@@ -17,10 +17,12 @@ window.onload = function () {
         burger.style.display = 'none';
     };
 
-    let links = Array.from(document.querySelectorAll('a[target=viewer]'));
-    links.forEach(function(link) {
-        link.addEventListener('click', hideMenu);
-    });
+    if (document.documentElement.clientWidth <= 900) {
+        let links = Array.from(document.querySelectorAll('a[target=viewer]'));
+        links.forEach(function(link) {
+            link.addEventListener('click', hideMenu);
+        });
 
-    burger.querySelector('button').addEventListener('click', showMenu);
+        burger.querySelector('button').addEventListener('click', showMenu);
+    }
 };
