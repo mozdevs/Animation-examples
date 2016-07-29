@@ -3,6 +3,8 @@
 :root {
     --contrast-color: #0095DD;
     --contrast-color-over: #00539F;
+    --contrast-color-translucid: rgba(0, 149, 221, 0.7);
+    --contrast-color-over-translucid: rgba(0, 83, 159, 0.7);
 
     --bg-color: #f6f4ec;
     --bg-color-shadow: #d7d3c8;
@@ -174,13 +176,18 @@ main.constrained {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0.5;
+    /*opacity: 0.5;*/
     /*display: none;*/
     z-index: 10;
 }
 
 .burger button {
     padding: 0.2em;
+    background: var(--contrast-color-translucid);
+}
+
+.burger button:hover {
+    background: var(--contrast-color-over-translucid);
 }
 
 @media (max-width: 900px) {
