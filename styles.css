@@ -143,6 +143,7 @@ body.index {
 .viewer-wrapper {
     flex: 1 1 auto;
     overflow: hidden;
+    position: relative;
 }
 
 .viewer {
@@ -151,6 +152,7 @@ body.index {
     height: 100%;
     box-sizing: border-box;
     width: 100%;
+    position: absolute; /* chrome doesn't just like height:100% :( */
 }
 
 /* helpers */
@@ -305,7 +307,6 @@ p.tagline {
 .no-support {
     background: var(--bg-color-shadow);
     padding: 1em;
-    /*color: var(--text-color-contrast);*/
 }
 
 /* ---------------------------------------------------------------------------*/
