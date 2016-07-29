@@ -1,9 +1,11 @@
 'use strict';
 
-const WIDTH_BREAKPOINT = 900;
 
-function isSmallViewport() {
-    return document.documentElement.clientWidth < WIDTH_BREAKPOINT;
+// TODO: we need to display local content instead of the one at Github
+const GITHUB_RAW = 'https://raw.githubusercontent.com/mozdevs/Animation-examples/';
+function buildRawCodeURL(base) {
+    let path = base.replace(window.location.href, '');
+    return `${GITHUB_RAW}gh-pages/${path}`;
 }
 
 window.onload = function () {
@@ -11,12 +13,26 @@ window.onload = function () {
     let burger = document.querySelector('.burger');
     let viewer = document.querySelector('.viewer-wrapper');
     let links = Array.from(document.querySelectorAll('a[target=viewer]'));
-
+    let viewSourceLink = document.querySelector('.view-source a');
+    let viewSource = document.querySelector('.view-source');
 
     // -------------------------------------------------------------------------
     // handle View Source Code button
     // -------------------------------------------------------------------------
 
+    links.forEach(function (link) {
+        link.addEventListener('click', function(event) {
+            // only update and show the button for demos
+            if (/demos\//.test(link.href)) {
+                viewSourceLink.href = buildRawCodeURL(link.href);
+                viewSource.style.display = 'block';
+            }
+            else {
+                viewSourceLink.href = '#';
+                viewSource.style.display = 'none';
+            }
+        });
+    });
 
     // -------------------------------------------------------------------------
     // handle responsive menu
@@ -36,6 +52,9 @@ window.onload = function () {
 
         menu.classList.add('mobile-show');
         menu.classList.remove('mobile-hidden');
+
+        viewSourceLink.href = '#';
+        viewSource.style.display = 'none';
     };
 
     links.forEach(function(link) {

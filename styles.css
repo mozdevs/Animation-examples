@@ -200,6 +200,10 @@ main.constrained {
     display: none;
 }
 
+.view-source a:not(href~=http) {
+    display: none;
+}
+
 @media (max-width: 900px) {
     .mobile-hidden {
         display: none;
