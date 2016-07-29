@@ -298,6 +298,15 @@ p.tagline {
     left: 50%;
     margin-left: -44px;
 }
+/* ---------------------------------------------------------------------------*/
+/* no browser support warning banner
+/* ---------------------------------------------------------------------------*/
+
+.no-support {
+    background: var(--bg-color-shadow);
+    padding: 1em;
+    /*color: var(--text-color-contrast);*/
+}
 
 /* ---------------------------------------------------------------------------*/
 /* custom syntax highlight */

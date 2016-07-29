@@ -16,6 +16,7 @@ window.onload = function () {
     let viewSourceLink = document.querySelector('.view-source a');
     let viewSource = document.querySelector('.view-source');
 
+
     // -------------------------------------------------------------------------
     // handle View Source Code button
     // -------------------------------------------------------------------------
