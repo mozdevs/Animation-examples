@@ -137,6 +137,13 @@ el.addEventListener('mouseout', function () {
 });
 </pre></code>
                 </section>
+                <aside class="note"><p><strong>NOTE:</strong> Once the API implementation allows the use of implicit
+                    <code>from</code> values, we can fully mimick the CSS
+                    behaviour:</p>
+<pre><code class="lang-javascript">el.animate({
+    transform: ['scale(1.25)']
+}, 300);
+</code></pre>
             </section><!-- animations -->
         </article>
     </main>
