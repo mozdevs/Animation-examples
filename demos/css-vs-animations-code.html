@@ -28,9 +28,9 @@
 
     @keyframes rainbow {
         0% { background: #ff004d; }
-        25% { background: #ff77ab; }
+        20% { background: #ff77ab; }
         50% { background: #00e756; }
-        75% { background: #29adff; }
+        80% { background: #29adff; }
         100% { background: #ff77ab;}
     }
 
@@ -61,9 +61,9 @@
 
 @keyframes rainbow {
     0% { background: #ff004d; }
-    25% { background: #ff77ab; }
+    20% { background: #ff77ab; }
     50% { background: #00e756; }
-    75% { background: #29adff; }
+    80% { background: #29adff; }
     100% { background: #ff77ab;}
 }
 </code></pre>
@@ -78,9 +78,9 @@
 <pre><code class="lang-css">let el = document.querySelector('.rainbow');
 el.animate([
     { background: '#ff004d', offset: 0 },
-    { background: '#ff77ab', offset: 0.25 },
+    { background: '#ff77ab', offset: 0.20 },
     { background: '#00e756', offset: 0.5 },
-    { background: '#29adff', offset: 0.75 },
+    { background: '#29adff', offset: 0.80 },
     { background: '#ff77ab', offset: 1 }
 ], {
     duration: 2000,
@@ -170,9 +170,9 @@ function setupLoopedColor() {
     let el = document.querySelector('.anim-rainbow');
     el.animate([
         { background: '#ff004d', offset: 0 },
-        { background: '#ff77ab', offset: 0.25 },
+        { background: '#ff77ab', offset: 0.20 },
         { background: '#00e756', offset: 0.5 },
-        { background: '#29adff', offset: 0.75 },
+        { background: '#29adff', offset: 0.80 },
         { background: '#ff77ab', offset: 1 }
     ], {
         duration: 2000,
