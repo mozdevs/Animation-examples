@@ -37,7 +37,7 @@
 <script>
 window.onload = function () {
     // show no browser support banner if needed
-    if ((document.body.getAnimations === undefined)) {
+    if (window.Element.prototype.animate === undefined) {
         document.querySelector('.no-support').style.display = 'block';
     }
 }

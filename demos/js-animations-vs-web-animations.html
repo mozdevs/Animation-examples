@@ -18,7 +18,7 @@
 				var elementsContainer = document.getElementById('elements');
 				var jsAnimsBtn = document.getElementById('jsanims');
 				var webAnimsBtn = document.getElementById('webanims');
-				var webAnimationsSupport = (document.body.getAnimations !== undefined);
+				var webAnimationsSupport = (window.Element.prototype.animate !== undefined);
 				var objs = [];
 				var rafId;
 				var tweenLength = 1500;
