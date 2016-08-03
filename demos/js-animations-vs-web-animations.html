@@ -61,7 +61,7 @@
 					TWEEN.getAll().forEach((t) => t.stop());
 					TWEEN.removeAll();
 
-					if(webAnimationsSupport) {
+					if(document.getAnimations !== undefined) {
 						objs.forEach((obj) => {
 							obj.el.getAnimations()
 								.forEach((anim) => {
